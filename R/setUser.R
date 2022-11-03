@@ -4,12 +4,10 @@ user <- new.env()
 # Sets the value of the variable
 #' setUsername
 #'
-#' @param username 
+#' @param username
 #'
-#' @return
 #' @export
 #'
-#' @examples
 setUsername <- function(username) {
   assign("username", username, env=user)
 }
@@ -17,12 +15,10 @@ setUsername <- function(username) {
 # Sets the value of the variable
 #' setKey
 #'
-#' @param apikey 
+#' @param apikey
 #'
-#' @return
 #' @export
 #'
-#' @examples
 setKey <- function(apikey) {
   assign("apikey", apikey, env=user)
 }
@@ -30,21 +26,18 @@ setKey <- function(apikey) {
 # Gets the value of the variable
 #' getUsername
 #'
-#' @return
+#' @return username
 #' @export
 #'
-#' @examples
 getUsername <- function() {
   return(get("username", user))
 }
 
-# Sets the value of the variable
 #' getKey
 #'
-#' @return
+#' @return apikey
 #' @export
 #'
-#' @examples
 getKey <- function() {
   return(get("apikey", user))
 }
@@ -52,23 +45,20 @@ getKey <- function() {
 # Sets the value of the variable
 #' setPassword
 #'
-#' @param password 
+#' @param password
 #'
-#' @return
 #' @export
 #'
-#' @examples
-setPassword <- function(password) {  
+setPassword <- function(password) {
   assign("password", password, env=user)
 }
 
 # Gets the value of the variable
 #' getPassword
 #'
-#' @return
+#' @return password
 #' @export
 #'
-#' @examples
 getPassword<- function() {
   return(get("password", user))
 }
@@ -81,10 +71,8 @@ getPassword<- function() {
 #' @param password ODS-Passwort
 #' @param apikey ODS-API Key
 #'
-#' @return
 #' @export
 #'
-#' @examples
 setUser <- function(username,password,apikey){
   setUsername(username)
   setPassword(password)

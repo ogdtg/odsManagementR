@@ -2,12 +2,16 @@
 #'
 #'Funktion um leeren Datensatz zu erstellen. Als Parameter wird die gewünschte Datensatz ID angegeben, die dann auch als Titel verwendet wird
 #'
-#' @param identifier 
+#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite toJSON
+#' @importFrom httr POST
+#' @importFrom httr authenticate
 #'
-#' @return
+#' @param identifier gewünschte Technische Kennung
+#'
+#' @return dataset_uid des neuen Datensatzes
 #' @export
 #'
-#' @examples
 create_empty_dataset <- function(identifier) {
   tryCatch({
     pw=getPassword()
@@ -16,10 +20,18 @@ create_empty_dataset <- function(identifier) {
   error = function(cond){
     stop("No User initialized. Please use setUser(username,password) first.")
   })
-  
-  httr::POST(url = 'https://data.tg.ch/api/management/v2/datasets/',
-             httr::authenticate(usr, pw),
-             body = toJSON(list(metas = list(
-               default = list(title = identifier)
-             )), auto_unbox = T))
+
+  tryCatch({
+    res <- httr::POST(url = 'https://data.tg.ch/api/management/v2/datasets/',
+               httr::authenticate(usr, pw),
+               body = jsonlite::toJSON(list(metas = list(
+                 default = list(title = identifier)
+               )), auto_unbox = T))
+    dataset_id = res$content %>% rawToChar() %>% jsonlite::fromJSON %>% .$dataset_uid
+    return(dataset_id)
+  },
+  error = function(cond){
+    return(NULL)
+  })
+
 }
