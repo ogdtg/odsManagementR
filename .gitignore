@@ -4,6 +4,6 @@
 .Ruserdata
 test_try.R
 test_data.csv
-.txt
-.csv
-.xlsx
+*.txt
+*.csv
+*.xlsx
