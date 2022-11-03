@@ -12,7 +12,7 @@ The goal of odsManagementR is to ...
 You can install the development version of odsManagementR like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("ogdtg/odsManagementR")
 ```
 
 ## Example
