@@ -10,9 +10,8 @@
 #'
 #'
 create_dataset <- function(identifier,title) {
-  if (!exists("metadata_catalog")){
-    metadata_catalog <<- get_dataset_info()
-  }
+
+  metadata_catalog <<- get_dataset_info()
 
 
   if (identifier %in% metadata_catalog$dataset_uid) {
@@ -28,8 +27,7 @@ create_dataset <- function(identifier,title) {
     stop("No User initialized. Please use setUser(username,password) first.")
   })
 
-  res <- create_empty_dataset(identifier)
-  dataset_id = res$content %>% rawToChar() %>% jsonlite::fromJSON %>% .$dataset_uid
+  dataset_id <- create_empty_dataset(identifier)
   set_title(title,dataset_id)
   return(dataset_id)
 }

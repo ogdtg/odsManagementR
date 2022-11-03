@@ -27,7 +27,7 @@ create_empty_dataset <- function(identifier) {
                body = jsonlite::toJSON(list(metas = list(
                  default = list(title = identifier)
                )), auto_unbox = T))
-    dataset_id = res$content %>% rawToChar() %>% jsonlite::fromJSON %>% .$dataset_uid
+    dataset_id = res$content %>% rawToChar() %>% jsonlite::fromJSON() %>% .$dataset_uid
     return(dataset_id)
   },
   error = function(cond){
