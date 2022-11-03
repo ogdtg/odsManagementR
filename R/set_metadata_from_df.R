@@ -1,0 +1,58 @@
+#' set_metadata_from_df
+#'
+#' Funktion um Metadaten aus einem ODS Metadaten data.frame zu setzen
+#'
+#' @param dataset_id 
+#' @param metas 
+#' @param title Titel um Kennung als Titel zu überschreiben
+#' @export
+#' @return
+#'
+#' @examples
+set_metadata_from_df <- function(dataset_id,metas,title) {
+  
+  tryCatch({
+    pw=getPassword()
+    usr=getUsername()
+  },
+  error = function(cond){
+    stop("No User initialized. Please use setUser(username,password) first.")
+  })
+  
+  
+  
+  final_list <- list()
+  for (i in 1:nrow(metas)) {
+    
+    if (metas$name[i] %in% c("modified","created","issued")) {
+      next
+    }
+    
+    if (is.null(metas$value[i][[1]])) {
+      next
+    }
+    if (metas$template$name[i]%in% c("default","dcat","dcat_ap_ch","internal")) {
+      
+      if (metas$name[i]=="geographic_reference"){
+        temp <- list(template_name = metas$template$name[i],metadata_name = metas$name[i], override_remote_value=TRUE, value =list(metas$value[i][[1]]) )
+        
+      } else {
+        temp <- list(template_name = metas$template$name[i],metadata_name = metas$name[i], override_remote_value=TRUE, value =metas$value[i][[1]] )
+      }
+      
+      final_list[[i]] <- temp
+    }
+    
+  }
+  final_list[sapply(final_list, is.null)] <- NULL
+  
+  new_values <- list(metas=final_list) %>% toJSON(auto_unbox = T)
+  
+  
+  httr::PUT(url = paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_id,"/metadata/"),
+            httr::authenticate(usr, pw),
+            body = new_values)
+  
+  set_title(title = title,dataset_id = dataset_id )
+  
+}
