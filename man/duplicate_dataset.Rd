@@ -13,6 +13,9 @@ duplicate_dataset(copy_id, new_id, title)
 
 \item{title}{neuer Titel}
 }
+\value{
+new_uid dataset_uid des neu erstellten Datensatz
+}
 \description{
 Funktion um Metadaten eines Datensatzes zu kopieren
 }

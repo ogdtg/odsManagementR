@@ -32,6 +32,9 @@ get_dataset_info <- function() {
       jsonlite::fromJSON() %>%
       .$datasets
     counter = nrow(result[[page]])
+    if (length(counter)==0){
+      break
+    }
   }
   if(exists("metadata_catalog")){
     warning("Variable metadata_catalog will b overwritten.")

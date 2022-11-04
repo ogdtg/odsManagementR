@@ -6,6 +6,7 @@
 #' @param new_id neue technische Kennung
 #' @param title neuer Titel
 #'
+#' @return new_uid dataset_uid des neu erstellten Datensatz
 #' @export
 #'
 duplicate_dataset = function(copy_id,new_id,title) {
@@ -27,5 +28,6 @@ duplicate_dataset = function(copy_id,new_id,title) {
   }, error = function(cond){
     stop("Something went wrong")
   })
+  return(new_uid)
 
 }
