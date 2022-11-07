@@ -46,7 +46,10 @@ data_list <- lapply(files_vec, function(x){
 
 })
 
-### Daten aufbereiten
+
+#########################
+### Daten aufbereiten ###
+#########################
 
 # Namen für bind_rows
 names(data_list) <- paste0("Statistik Grundbildung ",2017:2021)
@@ -60,6 +63,9 @@ original_names_df <- data.frame(Name_Original=names_amt)
 # Neue Namen
 new_names_df <- data.frame(Name_Neu=names(df_full))
 # Sollten grössere Aufbereitungsschritte getätigt und neue Variablen eingefügt werden, müssen diese erklärt werden
+
+# Daten als csv abspeichern
+write_ogd(df_full,"Output Daten/lernende_api.csv")
 
 #############################################################
 #############################################################
@@ -79,18 +85,18 @@ XLConnect::saveWorkbook(wb)
 ####################################################
 
 
+#############################
+### Metadaten aufbereiten ###
+#############################
+
 # Metadaten aus excel file einlesen
 metadata_test <- read_excel("schema_template - ABB_amt.xlsx",sheet="Metadaten")
 names(metadata_test)[1]<-"Metadata"
 metadata_test["Beispiel"]<-NULL
 
-meta_template <- get_metadata("da_7xatt5")
+#setUser zur Authentifizierung
+
 # relevante Felder
-
-theme_id = metadata_catalog$metas$internal$theme_id
-theme = metadata_catalog$metas$default$theme
-
-
 
 template_names <- c("dcat","default","default","default","default","default","default","default","default","default","default")
 meta_names <- c("creator","title","description","keyword","publisher","references","theme","theme","theme","theme","theme")
@@ -108,7 +114,7 @@ dataset_id <- create_new_dataset_id(part_id)
 
 dataset_uid <- duplicate_dataset(copy_id = "da_qwsbz2",new_id = dataset_id,title = title_meta)
 
-# Restlichen Metadaten einpflegen
+# Restliche Metadaten einpflegen
 
 counter = 1
 theme_list = list()
@@ -141,7 +147,114 @@ for (i in 1:nrow(meta_template_df)) {
 
 }
 themes  <- theme_list %>% unlist()
+
+# Bis zu 5 Themen können hinzugefügt werden
 set_metadata(dataset_id = dataset_uid,template="default",meta_name="theme",meta_value = themes)
 
+# Harvesting separat je nach Wunsch einfügen
+set_metadata(dataset_id = dataset_uid,template="custom",meta_name="tags",meta_value = list("opendata.swiss"))
 
+# Zuschreibungen separat je nach Wunsch einfügen
+set_metadata(dataset_id = dataset_uid,template="default",meta_name="attributions",meta_value = list("link1","link2"))
+
+####################################################################################
+####################################################################################
 # Metadaten sind eingepflegt
+# siehe https://data.tg.ch/backoffice/catalog/datasets/dek-abb-2/#information
+
+
+##############################
+### DATENQUELLE HINZUFÜGEN ###
+##############################
+
+# Upload zu ODS
+filename_ods <- upload_file_to_ods("Output Daten/lernende_api.csv")
+ods_files <- list_ods_files()
+
+# Hochegladenes File zu Datenquelle machen
+add_resource_to_data(filename_ods$file_id,dataset_uid = dataset_uid,title = "API: Abschlüsse Berufliche Grundbildung seit 2017")
+get_dataset_resource(dataset_uid)
+
+#######################################
+### SPALTENBESCHREIBUNGN HINZUFÜGEN ###
+#######################################
+
+spalten <- read_excel("schema_template - ABB_amt.xlsx",sheet="Spaltenbeschreibungen")
+
+
+for (i in 1:nrow(spalten)){
+  add_description_to_field(
+    dataset_uid = dataset_uid,
+    field_name = spalten$Name_Neu[i],
+    new_description = spalten$Variablenbeschreibungen[i]
+  )
+  s=add_type(
+    dataset_uid = dataset_uid,
+    field_name = spalten$Name_Neu[i],
+    new_type  = spalten$type[i]
+  )
+  if (is.na(spalten$precision[i])) {
+    next
+  } else {
+    add_datetime_precision(
+      dataset_uid = dataset_uid,
+      field_name = spalten$Name_Neu[i],
+      annotation_args = list(spalten$precision[i])
+    )
+
+  }
+
+}
+
+
+add_datetime_precision(
+  dataset_uid = dataset_uid,
+  field_name = spalten$Name_Neu[17],
+  annotation_args = list(spalten$precision[17])
+)
+
+fields <- get_field_processors(dataset_uid)
+
+add_type <- function(dataset_uid,field_name,new_type){
+  body <- create_fields_body(configuration_item = "type",edit_field_id = field_name,new_type=new_type)
+  res=add_field_config(body=body,dataset_id = dataset_uid)
+
+  tryCatch({
+    result <- res$content %>% rawToChar() %>% jsonlite::fromJSON() %>% .$processor_uid
+  },
+  error = function(cond){
+    result <- res$status_code
+  })
+
+  return(result)
+
+}
+
+
+add_datetime_precision <- function(dataset_uid,field_name,annotation_args){
+  body <-
+    create_fields_body(
+      configuration_item = "annotate",
+      edit_field_id = field_name,
+      new_annotation = "timeserie_precision",
+      annotation_args = annotation_args
+    )
+  res=add_field_config(body=body,dataset_id = dataset_uid)
+
+  tryCatch({
+    result <- res$content %>% rawToChar() %>% jsonlite::fromJSON() %>% .$processor_uid
+  },
+  error = function(cond){
+    result <- res$status_code
+  })
+
+  return(res)
+
+
+}
+
+
+
+
+
+

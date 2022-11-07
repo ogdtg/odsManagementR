@@ -10,6 +10,7 @@
 #' @importFrom httr POST
 #' @importFrom httr authenticate
 #' @importFrom jsonlite fromJSON
+#' @importFrom httr upload_file
 #'
 upload_file_to_ods <- function(filepath) {
 
@@ -22,7 +23,7 @@ upload_file_to_ods <- function(filepath) {
 
   })
   files = list(
-    `file` = upload_file(filepath)
+    `file` = httr::upload_file(filepath)
   )
 
   res <- httr::POST(url = 'https://data.tg.ch/api/management/v2/files', body = files, encode = 'multipart',

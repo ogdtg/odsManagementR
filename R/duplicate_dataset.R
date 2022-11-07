@@ -26,7 +26,8 @@ duplicate_dataset = function(copy_id,new_id,title) {
 
     set_metadata_from_df(new_uid,metas = metadata,title = title)
   }, error = function(cond){
-    stop("Something went wrong")
+    message(cond)
+    return(NULL)
   })
   return(new_uid)
 
