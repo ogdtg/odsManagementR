@@ -83,7 +83,7 @@ write_names_to_schema <- function(filepath,orginal_names_df,new_names_df) {
   XLConnect::saveWorkbook(wb)
 }
 
-
+write_names_to_schema("schema_template - ABB.xlsx",orginal_names_df,new_names_df)
 
 ####################################################
 # Schema wird nun an Amt gesendet und ausgefüllt  ##
@@ -180,6 +180,8 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   }
   return(dataset_uid)
 }
+
+
 
 add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
 
