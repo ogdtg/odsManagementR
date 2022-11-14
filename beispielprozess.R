@@ -108,7 +108,7 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   if (!is.null(zuschreibungen)){
     temp <- zuschreibungen %>% unlist() %>% is.character()
     if (!temp) {
-      stop("zuschreibungen muss liste von character elementen sein")
+      stop("zuschreibungen muss Liste von character elementen sein")
     }
   }
 
