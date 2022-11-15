@@ -7,7 +7,6 @@
 #' @return dataset_id/technische Kennung
 #' @export
 #'
-#' @examples create_new_dataset_id("sk-stat")
 create_new_dataset_id = function(test_id){
   get_dataset_info()
 

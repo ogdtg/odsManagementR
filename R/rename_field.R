@@ -18,7 +18,12 @@ rename_field <- function(dataset_uid, old_name, new_name, new_label) {
     result <- res$content %>% rawToChar() %>% jsonlite::fromJSON() %>% .$processor_uid
   },
   error = function(cond){
-    result <- res$status_code
+    tryCatch({
+      result <- res$status_code
+    },
+    error = function(cond){
+      result <- NULL
+    })
   })
 
   return(result)

@@ -1,5 +1,6 @@
 #' add_metadata_from_scheme
 #'
+#' Erstellt neuen Datensatz mit entsprechender Kennung und befüllt diesen mit Metadaten
 #' Funktion kann nur auf genau definiertes Schema angewendet werden.
 #' Alle Metadaten im Schema werden auf das Portal gesladen.
 #'
@@ -29,7 +30,7 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   #names(metadata_test)[1]<-"Metadata"
   metadata_test["Beispiel"]<-NULL
 
-  meta_template_df <- readRDS(meta_template_df) # Metadaten Schema laden um Loop durchführen zu können
+  meta_template_df <- readRDS("meta_template_df.rds") # Metadaten Schema laden um Loop durchführen zu können
 
   part_id <- metadata_test$Eintrag[which(metadata_test$Metadata=="Kennung")]
   title_meta <- metadata_test$Eintrag[which(metadata_test$Metadata=="Titel")]
@@ -47,6 +48,9 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
     meta_name = meta_template_df$meta_names[i]
     meta_value = metadata_test$Eintrag[which( metadata_test$Metadata==meta_template_df$join_col[i])]
 
+    if (meta_name %in% c("creator","publisher")) {
+      meta_value = paste0(meta_value," Kanton Thurgau")
+    }
 
     if (meta_name == "description") {
       meta_value =paste0(meta_value,"\n\nDatenquelle: ",metadata_test$Eintrag[which(metadata_test$Metadata=="Amt")])

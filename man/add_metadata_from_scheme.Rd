@@ -17,6 +17,7 @@ add_metadata_from_scheme(filepath, harvesting = TRUE, zuschreibungen = NULL)
 dataset_uid
 }
 \description{
+Erstellt neuen Datensatz mit entsprechender Kennung und befüllt diesen mit Metadaten
 Funktion kann nur auf genau definiertes Schema angewendet werden.
 Alle Metadaten im Schema werden auf das Portal gesladen.
 }
