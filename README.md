@@ -93,9 +93,7 @@ Die enthaltenen Schritte werden nun kurz erläutert.
 
 ### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
 
-Die einzelnen Schritte innerhalb der Funktion werden nachfolgend kurz beschrieben.
 
-### CSV von lokalem 
 
 
 
