@@ -11,7 +11,7 @@
 #' @importFrom dplyr select
 #' @export
 #'
-get_dataset_info <- function() {
+get_dataset_info <- function(path = "Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv") {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
@@ -58,8 +58,9 @@ get_dataset_info <- function() {
   tryCatch({
     write_ogd(
       local_df,
-      "Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv")
-      message("Katalog gespeichert unter Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv")
+      path
+      )
+      message(paste0("Katalog gespeichert unter ",path))
   },
   error = function(cond){
     stop("Katalog konnte nicht gespeichert werden")
