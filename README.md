@@ -22,7 +22,7 @@ library(odsManagementR)
 
 Mit der Funktion `get_dataset_info` wird der aktuelle Metdata Katalog heruntergeladen. Dieser beinhaltet die Metadaten aller Datensätze, die sich derzeit auf dem Datenportal befinden. Hierzu zählen auch unveröffentlichte Datensätze sowie Datenkataloge. Die Funktion erzeugt automatisch eine Environment Variable `metadata_catalog`, die die Daten erhält. Die Funktion wird von mehreren anderen Funktionen verwendet, um sicher zugehen, dass der Katalog immer auf dem neuesten Stand ist. Ausserdem wird der Katalog jedes mal auf dem Lokalen Pfad, der bei `path` angegeben ist gespeichert.
 
-*Der Parameter `r path` ist standardmässig auf einen lokalen Order des Kantons gesetzt, kann aber geändert werden.*
+*Der Parameter `path` ist standardmässig auf einen lokalen Order des Kantons gesetzt, kann aber geändert werden.*
 
 ``` r
 get_dataset_info(path=path)
