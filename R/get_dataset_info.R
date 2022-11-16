@@ -7,6 +7,8 @@
 #' @importFrom httr GET
 #' @importFrom httr authenticate
 #' @importFrom dplyr bind_rows
+#' @importFrom tidyr unnest
+#' @importFrom dplyr select
 #' @export
 #'
 get_dataset_info <- function() {
@@ -42,6 +44,26 @@ get_dataset_info <- function() {
   } else {
     metadata_catalog <<- result %>% dplyr::bind_rows()
   }
+  local_df <-
+    metadata_catalog %>%
+    tidyr::unnest_wider(metas) %>%
+    tidyr::unnest(default) %>%
+    tidyr::unnest(visualization) %>%
+    tidyr::unnest(internal) %>%
+    tidyr::unnest(dcat) %>%
+    tidyr::unnest(dcat_ap_ch) %>%
+    dplyr::select(dataset_uid,dataset_id,title,creator,publisher)
+
+
+  tryCatch({
+    write_ogd(
+      local_df,
+      "Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv")
+      message("Katalog gespeichert unter Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv")
+  },
+  error = function(cond){
+    stop("Katalog konnte nicht gespeichert werden")
+  })
   return(metadata_catalog)
 }
 

@@ -96,40 +96,57 @@ write_names_to_schema("schema_template - ABB.xlsx",orginal_names_df,new_names_df
 #############################
 
 
-
-
-
-
-
 # Metadaten aus excel file einlesen
 metadata_test <- read_excel("schema_template - ABB_amt.xlsx",sheet="Metadaten")
 metadata_test["Beispiel"]<-NULL
 
-#setUser zur Authentifizierung
 
-# relevante Felder
-
-# template_names <- c("dcat","default","default","default","default","default","default","default","default","default","default")
-# meta_names <- c("creator","title","description","keyword","publisher","references","theme","theme","theme","theme","theme")
-# join_col <- c("Amt","Titel","Beschreibung","Schluesselwoerter","Amt","Referenz","Thema 1","Thema 2","Thema 3","Thema 4","Thema 5")
 
 meta_template_df <- readRDS("meta_template_df.rds")
-#saveRDS(meta_template_df,"meta_template_df.rds")
-# Template Datensatz kopieren (befüllt mit Standardmetadaten) und Titel + ID einfügen, dataset_uid speichern für weiterverarbeitung
-# da_qwsbz2 = template datensatz mit Standardmetadaten befüllt
 
 
-#Metadaten
-dataset_uid <- add_metadata_from_scheme("schema_template - ABB_amt.xlsx",harvesting = TRUE)
 
 
-#Spaltenbeschreibungen und Daten
-add_data_to_dataset(dataset_uid = dataset_uid,schema = "schema_template - ABB_amt.xlsx",ogd_file = "Output Daten/lernende_api.csv", resource_title = " Abschlüsse Berufliche Grundbildung seit 2017")
-add_data_to_dataset
+# Datensatz erstellen von Kopie des Template Datensatzes (template-01)
+# fehlende Metadaten ergänzen
+dataset_uid <-
+  add_metadata_from_scheme("schema_template - ABB_amt.xlsx", harvesting = TRUE)
+
+
+# Daten hochladen
+# Spaltenbeschreibungen zuweisen
+# Datentypen ergänzen
+add_data_to_dataset(
+  dataset_uid = dataset_uid,
+  schema = "schema_template - ABB_amt.xlsx",
+  ogd_file = "Output Daten/lernende_api.csv",
+  resource_title = " Abschlüsse Berufliche Grundbildung seit 2017"
+)
+metadata_catalog <- get_dataset_info()
+
 ####################################################################################
 ####################################################################################
 # Metadaten sind eingepflegt
 # siehe https://data.tg.ch/backoffice/catalog/datasets/dek-abb-2/#information
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

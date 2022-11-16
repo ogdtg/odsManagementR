@@ -15,6 +15,3 @@ dataset_id/technische Kennung
 \description{
 Funktion erzeugt Kennung mit durchgängiger Nummerierung ohne Duplikate
 }
-\examples{
-create_new_dataset_id("sk-stat")
-}
