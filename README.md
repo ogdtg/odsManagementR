@@ -89,7 +89,22 @@ Die enthaltenen Schritte werden nun kurz erläutert.
 
 ### Lokale CSV Datei auf ODS hochladen
 
-### Resource mit Metadaten verknüpfen
+Das aufbereitete CSV File kann mit der `upload_file_to_ods` Funktion auf ODS hochgeladen werden. Dabei muss nur der Pfad zum entsprechenden File angegeben werden. Dei Funktion gibt eine Liste mit verschiedenen Metadaten des Files zurück, u.a. die `file_id`, die für die Verknüpfung mit dem Datensatz benötigt wird. Eine Übersicht über alle Files auf ODS kann mit der `list_ods_files` angezeigt werden. Die Funktion erzeugt einen Datensatz den Metadaten aller Files.
+
+```r
+ods_files <- list_ods_files()
+# returns dataframe with metadata on all files on ODS
+
+filename_ods <- upload_file_to_ods("path/to/upload_data.csv")
+```
+
+### Ressource mit Metadaten verknüpfen
+
+Nachdem das CSV File hochgeladen wurde, muss es noch mit dem entsprechenden Metadatensatz verknüpft werden. Dies kann mithilfe der `add_resource_to_data` bewerkstelligt werden. Hierzu wird die vorhin erwähnte `file_id` als Parameter benötigt. Diese kann auch der File Liste entnommen werden, die durch `list_ods_files` erzeugt wird. Als zweiter Parameter muss die `dataset_uid` des Datensatzes mit dem das File verknüpft werden soll, angegeben werden. Schliesslich muss ein Titel für die Ressource angegeben werden.
+
+```r
+
+```
 
 ### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
 
