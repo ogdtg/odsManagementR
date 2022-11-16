@@ -33,7 +33,15 @@ get_dataset_info(path=path)
 
 ## Neuen Datensatz erstellen
 
-Ein Datensatz mit sämtlichen Metadaten, befüllt aus einem Excel Schema, kann mit der `add_metadata_from_scheme` Funktion erzeugt werden. Diese Funktion ist eine wrapper Funktion, deren Einzelteile im nun folgenden aufgeschlüsselt werden.
+### Wrapper Funktion
+
+Um Datensätze zu erstellen und sie direkt mit den Metadaten aus dem Excel Schema zu befüllen kann die wrapper-Funktion `add_metadata_from_scheme` verwendet werden. Hierzu muss lediglich der Pfad zum ausgefüllten Schema als `filepath` angeggeben werden. Optional kann noch eine Liste von `zuschreibungen` angegeben werden (default ist `NULL`). Wenn der Datensatz **NICHT** geharvested werden soll, muss `harvesting=FALSE` gesetzt werden (default ist `TRUE`). Die Funktion gibt die `dataset_uid` des neu erstellten Datensatzes zurück
+
+Die einzelnen Schritte innerhalb der Funktion werden nachfolgend kurz beschrieben.
+
+```r
+dataset_uid <- add_metadata_from_scheme(filepath="path/to/schema.xlsx", harvesting = TRUE, zuschreibungen = NULL)
+```.
 
 ### Datensatzkennung erstellen
 Bevor ein neuer Datensatz erstellt werden kann, muss eine passende Kennung erzeugt werden. Diese setzt sich im Kanton Thurgau wie folgt zusmamen: departement-amt-laufende Numemer (z.B. sk-stat-1). ODS erlaubt es eine Kennung für mehrere Datensätze anzulegen, da intern automatisch eine eindeutige `dataset_uid` zugewiesen wird. Daher muss darauf geachtet werden, dass die Kennungen eindeutig sind, um Verwirrungen zu vermeiden. Die `create_new_dataset_id` gewährleistet eindeutige Kennungen, indem sie einer gegebenen Teilkennung die korrekte laufende Nummer zuweist.
@@ -62,13 +70,33 @@ set_metadata(dataset_id = "da-xxxxxx",
 
 ```
 
+## Daten hinzufügen
+
 ### Wrapper Funktion
 
-Um Datensätze zu erstellen und sie direkt mit den Metadaten aus dem Excel Schema zu befüllen kann die wrapper-Funktion `add_metadata_from_scheme` verwendet werden, die die oben beschriebenen Schritte beinhaltet. Hierzu muss lediglich der Pfad zum ausgefüllten Schema als `filepath` angeggeben werden. Optional kann noch eine Liste von `zuschreibungen` angegeben werden (default ist `NULL`). Wenn der Datensatz **NICHT** geharvested werden soll, muss `harvesting=FALSE` gesetzt werden (default ist `TRUE`) 
+Um um CSV Dateien vom loakeln System ins ODS zu laden, den im vorherigen Schrit erstellten Metadatensatz mit der Datenresource zu verbinden und die Spaltenbeschreibungen und Datentypen zu bearbeiten kann die `add_data_to_dataset` Funktion verwendet werden. Als Parameter muss hier die `dataset_uid` anegegeben werden, die `add_metadata_from_scheme` zurück gibt. Ausserdem muss der Pfad zum ausgefüllten Schema sowie zum lokalen CSV File mit den Daten angegeben werden. Schliesslich muss ein Titel für die Resource auf ODS angegeben werden.
 
 ```r
-add_metadata_from_scheme(filepath="path/to/schema.xlsx", harvesting = TRUE, zuschreibungen = NULL)
+add_data_to_dataset(
+  dataset_uid = dataset_uid,
+  schema = "path/to/schema.xlsx",
+  ogd_file = "path/to/upload_data.csv",
+  resource_title = "New Resource Title"
+)
 ```
+
+Die enthaltenen Schritte werden nun kurz erläutert.
+
+### Lokale CSV Datei auf ODS hochladen
+
+### Resource mit Metadaten verknüpfen
+
+### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
+
+Die einzelnen Schritte innerhalb der Funktion werden nachfolgend kurz beschrieben.
+
+### CSV von lokalem 
+
 
 
 
