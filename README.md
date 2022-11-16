@@ -54,8 +54,11 @@ dataset_uid <- duplicate_dataset(copy_id = "da_xxxxxx",new_id = dataset_id,title
 ### Metadaten einfügen
 Metadate können mithilfe der `set_metadata` Funktion eingefügt werden. Beim Parameter `dataset_id` muss die `dataset_uid` in Form `da-xxxxxx` anegeben werden. Dieser Parameter gibt an, für welchen Datensatz Metadaten gesetzt werden sollen. Die verfügbaren Werte für `template` können den Metadaten eines Datensatzes entnommen werden (Funktion `get_metadata(dataset_uid)`). Für data.tg.ch sind dies `custom`,`visualization`,`dcat`,`default`,`dcat_ap_ch` oder `internal`. Diese Werte sind als eine Art èbergruppe der einzelnen Metadaten zu verstehen und tauchen so teilweise auch im ODS Backend auf. Als `meta_name` muss der entsprechende Wert des Metadaten Feles angegeben werden (z.B. `title`). Schliesslich muss der Wert der gesetzt werden soll als `meta_value` angegeben werden. Für manche Metadaten Felder muss iene Liste als `meta_value` angegeben werden. Innerhalb der `add_metadata_from_scheme` Funktion wird für diesen Umstand kontrolliert kontrolliert. Weitere Informatioenn können der offiziellen [Dokumentation](https://betahelp.opendatasoft.com/management-api/#dataset-metadata) der API entnommen werden.
 
-````r
-set_metadata(dataset_id = "da-xxxxxx",template="default",meta_name="title",meta_value = "New Title for Dataset")
+```r
+set_metadata(dataset_id = "da-xxxxxx",
+             template="default",
+             meta_name="title",
+             meta_value = "New Title for Dataset")
 
 ```
 
