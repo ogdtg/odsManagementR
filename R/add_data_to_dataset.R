@@ -6,9 +6,18 @@
 #' @param ogd_file csv file, welches die Daten enthält
 #' @param resource_title geünschter Titel der Resource auf ODS
 #'
+#' @importFrom readxl read_excel
+#'
 #' @export
 #'
 add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
+
+  spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
+
+  if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
+    stop("Variablenbeschreibungen unvollständig. Bitte Excel Schema checken.")
+  }
+
 
   # Upload zu ODS
   filename_ods <- upload_file_to_ods(ogd_file)
@@ -16,7 +25,6 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
   # Hochegladenes File zu Datenquelle machen
   add_resource_to_data(filename_ods$file_id,dataset_uid = dataset_uid,title = resource_title)
 
-  spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
 
   variables <- read.table(ogd_file,             # Read only header of example data
                           head = TRUE,
@@ -39,11 +47,21 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       field_name = spalten$Name_Neu[i],
       new_description = spalten$Variablenbeschreibungen[i]
     )
-    s=add_type(
+    add_type(
       dataset_uid = dataset_uid,
       field_name = spalten$Name_Neu[i],
       new_type  = spalten$type[i]
     )
+    if (is.na(spalten$precision[i])) {
+      next
+    } else {
+      add_datetime_precision(
+        dataset_uid = dataset_uid,
+        field_name = spalten$Name_Neu[i],
+        annotation_args = list(spalten$precision[i])
+      )
+
+    }
     if (is.na(spalten$precision[i])) {
       next
     } else {

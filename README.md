@@ -103,11 +103,18 @@ filename_ods <- upload_file_to_ods("path/to/upload_data.csv")
 Nachdem das CSV File hochgeladen wurde, muss es noch mit dem entsprechenden Metadatensatz verknüpft werden. Dies kann mithilfe der `add_resource_to_data` bewerkstelligt werden. Hierzu wird die vorhin erwähnte `file_id` als Parameter benötigt. Diese kann auch der File Liste entnommen werden, die durch `list_ods_files` erzeugt wird. Als zweiter Parameter muss die `dataset_uid` des Datensatzes mit dem das File verknüpft werden soll, angegeben werden. Schliesslich muss ein Titel für die Ressource angegeben werden.
 
 ```r
-
+add_resource_to_data(resource = filename_ods$file_id,dataset_uid = dataset_uid,title = "The new resource Title")
+# Uses the filename_ods list created by the upload_file_to_ods command
 ```
 
 ### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
 
+Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden vier Funktionen verwendet:
+
+*`rename_field`
+*`add_description_to_field`
+*`add_type`
+*`add_unit`
 
 
 

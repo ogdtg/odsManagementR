@@ -99,7 +99,7 @@ write_names_to_schema("schema_template - ABB.xlsx",orginal_names_df,new_names_df
 # Metadaten aus excel file einlesen
 metadata_test <- read_excel("schema_template - ABB_amt.xlsx",sheet="Metadaten")
 metadata_test["Beispiel"]<-NULL
-
+spalten <- read_excel("schema_template - ABB_amt.xlsx",sheet="Spaltenbeschreibungen")
 
 
 meta_template_df <- readRDS("meta_template_df.rds")
