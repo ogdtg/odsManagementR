@@ -172,7 +172,7 @@ add_unit(
 
 #### add_datetime_precision
 
-**Hinweis**: Diese Funktion liefert zwar den Status Code 200 (=erfolgreicher API Call), jedoch wird die timeserie precision nicht verändert. Fehler muss mit ODS geklärt werden.
+***Hinweis:*** *Diese Funktion liefert zwar den Status Code 200 (=erfolgreicher API Call), jedoch wird die timeserie precision nicht verändert. Fehler muss mit ODS geklärt werden.*
 
 Mit dieser Funktion kann bestimmt werden wie Datumsangaben angezeigt werden sollen. Als `year` oder `day` im Falle von `date`; als `hour` oder `minute` für `datetime`.
 Hierbei handelt es sich um eine sogenannte "Annotation". Weitere Annotationen können [hier](https://betahelp.opendatasoft.com/management-api/#annotate) eingesehen werden.
