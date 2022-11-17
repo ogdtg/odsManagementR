@@ -111,13 +111,79 @@ add_resource_to_data(resource = filename_ods$file_id,dataset_uid = dataset_uid,t
 
 Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden vier Funktionen verwendet:
 
-*`rename_field`
-*`add_description_to_field`
-*`add_type`
-*`add_unit`
+* `rename_field`
+* `add_description_to_field`
+* `add_type`
+* `add_unit`
+
+#### rename_field
+
+Die Funktion benötigt als Parameter die `dataset_id`, den aktuellen namen im ODS (`old_name`), den neuen Namen (`new_name`) sowie das neue Label (`new_label`). Eigentlich sollte das Label den Namen bezeichnen, der beim Hovern über den Spaltennamen im ODS erscheint. Allerdings erscheint im ODS die Beschreibung der Spalten. Deshalb ist zu empfehlen den gleichen Wert für `new_name` und `new_label` zu verwenden.
+```r 
+rename_field(
+        dataset_uid = "da-xxxxxx"",
+        old_name = "current_var_name",
+        new_name = "new_var_name",
+        new_label = "new_var_name"
+      )
+
+```
+
+Innerhalb der wrapper Funktion wird gecheckt, ob sich der aktuelle Name im ODS vom Namen im Excel Schema unterscheidet und entsprechend angepasst (Name aus Excel wird übernommen).
+
+#### add_description_to_field
+
+Mit der Funktion kann eine Variablenbeschreibung hinzugefügt/geändert werden. Dazu muss wieder die entsprechende `dataset_uid` sowie der Name der Variable (`field_name`)  angegeben werden. Die neue Beschreibung kann dann als `new_description` Parameter angegeben werden.
+```r
+add_description_to_field(
+      dataset_uid = "da-xxxxxx"",
+      field_name = "current_var_name",
+      new_description = "New Description vor variable"
+    )
+```
+
+#### add_type
+
+Die Definition des Datentyps funktioniert nach dem gleichen Prinzip wie das Hinzufügen der Beschreibung. Wieder müssen `dataset_uid` und `field_name` aneggeben werden. Der gewünschte Datentyp wird als `new_type` an die Funktion übergeben. Die verfügbaren Datentypen sind `text`,`int`,`double`,`geo_point_2d`,`geo_shape`,`date`,`datetime` und `file`.
 
 
+````r
+add_type(
+      dataset_uid = "da-xxxxxx"",
+      field_name = "current_var_name",
+      new_type  = "int"
+    )
+# sets datatype to integer
+```
+
+#### add_unit
+
+Falls möglich kann eine Einheit hinzugefügt werden. Verfügbare Einheiten auf ODS köönen [hier](https://betahelp.opendatasoft.com/management-api/#units) eingesehen werden.
+Wenn im Schema keine Einheit angegeben wird, überspringt die wrapper Funktion diesen Schritt
+
+```r
+add_unit(
+        dataset_uid = "da-xxxxxx"",
+        field_name = "current_var_name",
+        unit = "kg"
+        )
+# adds unit kilogramm
+```
+
+#### add_datetime_precision
+
+**Hinweis**: Diese Funktion liefert zwar den Status Code 200 (=erfolgreicher API Call), jedoch wird die timeserie precision nicht verändert. Fehler muss mit ODS geklärt werden.
+
+Mit dieser Funktion kann bestimmt werden wie Datumsangaben angezeigt werden sollen. Als `year` oder `day` im Falle von `date`; als `hour` oder `minute` für `datetime`.
+Hierbei handelt es sich um eine sogenannte "Annotation". Weitere Annotationen können [hier](https://betahelp.opendatasoft.com/management-api/#annotate) eingesehen werden.
 
 
+*Wichtig ist, dass der Parameter `annotation_args` als `list` an die Funktion übergeben wird.*
 
-
+````r 
+add_datetime_precision(
+        dataset_uid = dataset_uid,
+        field_name = spalten$Name_Neu[i],
+        annotation_args = list(spalten$precision[i])
+      )
+```
