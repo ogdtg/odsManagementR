@@ -4,7 +4,10 @@
 \alias{get_dataset_info}
 \title{get_dataset_info}
 \usage{
-get_dataset_info()
+get_dataset_info(
+ 
+    path = "Y:\\\\SK\\\\SKStat\\\\Open Government Data _ OGD\\\\Zusammenstellung Hilfsmittel OGD\\\\Selbst erstellte Hilfsmittel\\\\data_catalog.csv"
+)
 }
 \description{
 Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
