@@ -23,7 +23,7 @@ library(odsManagementR)
 Um Zugang zum jeweiligen ODS Portal zu bekommen und die Funktionalitäten der API nutzen zu können, muss zuerst ein User initialisiert werden. Dazu wird die `setUser` Funktion verwendet.
 Hierbei werden einfach die ODS Zugangsdaten eingegeben, sowie die Domain des Portals (z.B. data.tg.ch). Vorgesehen ist ausserdem, dass in einer späteren Phase die Zugangsdaten durch einen API Key erstezt werden. Dies funktioniert allerdings aufgrund fehlender Berechtigungen bis jetzt nicht. Auch wenn es sich um ein internes Package handelt, ist zu empfehlen, die Zugangsdaten in einem `.Renviron` File zu speichen und von dort einzulesen.
 
-````r
+```r
 setUser(username = "max.mustermann@tg.ch",
         password = "XXXXXXXXXX",
         apikey = "XXXXXXXXXX",
