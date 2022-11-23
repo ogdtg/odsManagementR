@@ -18,6 +18,21 @@ devtools::install_github("ogdtg/odsManagementR")
 library(odsManagementR)
 ```
 
+## User initialisieren
+
+Um Zugang zum jeweiligen ODS Portal zu bekommen und die Funktionalitäten der API nutzen zu können, muss zuerst ein User initialisiert werden. Dazu wird die `setUser` Funktion verwendet.
+Hierbei werden einfach die ODS Zugangsdaten eingegeben, sowie die Domain des Portals (z.B. data.tg.ch). Vorgesehen ist ausserdem, dass in einer späteren Phase die Zugangsdaten durch einen API Key erstezt werden. Dies funktioniert allerdings aufgrund fehlender Berechtigungen bis jetzt nicht. Auch wenn es sich um ein internes Package handelt, ist zu empfehlen, die Zugangsdaten in einem `.Renviron` File zu speichen und von dort einzulesen.
+
+````r
+setUser(username = "max.mustermann@tg.ch",
+        password = "XXXXXXXXXX",
+        apikey = "XXXXXXXXXX",
+        domain = "data.tg.ch")
+
+```
+Die Daten werden dann in einem Environment namens `User` gespeichert und tauchen somit nicht im Global Environment auf. Daten können mit `setUsername`,`setPassword`,`setApikey` und `setDomain` auch seperat gesetzt werden. Abgerufen werden können die Daten mit entsprechenden get-Funktionen (z.B. `getUsername`)
+
+
 ## Liste aller Datensätze erhalten
 
 Mit der Funktion `get_dataset_info` wird der aktuelle Metdata Katalog heruntergeladen. Dieser beinhaltet die Metadaten aller Datensätze, die sich derzeit auf dem Datenportal befinden. Hierzu zählen auch unveröffentlichte Datensätze sowie Datenkataloge. Die Funktion erzeugt automatisch eine Environment Variable `metadata_catalog`, die die Daten erhält. Die Funktion wird von mehreren anderen Funktionen verwendet, um sicher zugehen, dass der Katalog immer auf dem neuesten Stand ist. Ausserdem wird der Katalog jedes mal auf dem Lokalen Pfad, der bei `path` angegeben ist gespeichert.
