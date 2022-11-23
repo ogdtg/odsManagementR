@@ -39,13 +39,13 @@ add_user_to_group <- function(group_id,user_list){
 
   for (i in 1:length(test)) {
     if (test[[i]]=="success") {
-      message(paste0(names(test)[i]," zu Gruppe ",group_id," hinzugefügt." ))
+      message(paste0(names(test)[i]," zu Gruppe ",group_id," hinzugefuegt." ))
     }
     if (test[[i]]=="duplicate") {
       message(paste0(names(test)[i]," ist bereits Mitglied."))
     }
     if (test[[i]]=="error") {
-      message(paste0(names(test)[i]," konnte nicht hinzugefügt werden. Ist ",names(test)[i]," ein valider Username?"))
+      message(paste0(names(test)[i]," konnte nicht hinzugefuegt werden. Ist ",names(test)[i]," ein valider Username?"))
     }
 
   }

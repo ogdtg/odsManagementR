@@ -3,6 +3,8 @@
 #' Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
 #' Der Catalog wird in der Variable metadata_catalog gespeichert
 #'
+#' @param path Pfad zum Speicherort des lokalen Katalogs (default ist angegeben)
+#'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #' @importFrom httr authenticate

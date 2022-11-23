@@ -15,7 +15,7 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
 
   if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
-    stop("Variablenbeschreibungen unvollständig. Bitte Excel Schema checken.")
+    stop("Variablenbeschreibungen unvollstaendig. Bitte Excel Schema checken.")
   }
 
 

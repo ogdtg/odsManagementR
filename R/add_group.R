@@ -26,7 +26,7 @@ add_group <- function(group_name) {
   group_titles <- groups$group_info$title
 
   if(group_name %in% group_titles) {
-    stop("Gruppenname bereits vergeben. Bitte wählen Sie einen anderen Gruppennamen.")
+    stop("Gruppenname bereits vergeben. Bitte waehlen Sie einen anderen Gruppennamen.")
   }
 
   data = list(title = group_name) %>% jsonlite::toJSON(auto_unbox = T)
@@ -37,17 +37,5 @@ add_group <- function(group_name) {
       body = data,
       httr::authenticate(usr, pw)
     )
-
-  # test <- res$content %>% rawToChar() %>% fromJSON()
-  #
-  # for (i in 1:length(test)) {
-  #   if (test[[i]]=="success") {
-  #     message(paste0("Email-Einladung an ",names(test)[i]," versendet."))
-  #   }
-  #   if (test[[i]]=="already-member") {
-  #     message(paste0(names(test)[i]," ist bereits Member. Keine weitere Einladung versendet."))
-  #   }
-  #
-  # }
 
 }
