@@ -11,13 +11,14 @@ list_ods_files = function(){
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
 
   })
 
-  res <- httr::GET(url = 'https://data.tg.ch/api/management/v2/files',
+  res <- httr::GET(url = 'https://',domain,'/api/management/v2/files',
                    httr::authenticate(usr, pw))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()

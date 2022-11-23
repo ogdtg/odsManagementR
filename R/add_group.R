@@ -17,9 +17,11 @@ add_group <- function(group_name) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
   groups <- get_groups()
@@ -33,7 +35,7 @@ add_group <- function(group_name) {
 
   res <-
     httr::POST(
-      url = 'https://data.tg.ch/api/management/v2/groups/',
+      url = paste0('https://',domain,'/api/management/v2/groups/'),
       body = data,
       httr::authenticate(usr, pw)
     )

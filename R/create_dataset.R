@@ -16,18 +16,20 @@ create_dataset <- function(identifier,title) {
 
   if (identifier %in% metadata_catalog$dataset_uid) {
     temp_title <- metadata_catalog$metas$default$title[which(metadata_catalog$dataset_uid==identifier)]
-    stop(paste0("Datensatz ID schon vergeben an ",temp_title,". Datensatz kann nicht erstellt werden Bitte andere ID wählen."))
+    stop(paste0("Datensatz ID schon vergeben an ",temp_title,". Datensatz kann nicht erstellt werden Bitte andere ID waehlen."))
   }
   if (title %in% metadata_catalog$metas$default$title) {
-    stop(paste0("Titel schon vergeben an ",title,". Datensatz kann nicht erstellt werden Bitte anderen Titel wählen."))
+    stop(paste0("Titel schon vergeben an ",title,". Datensatz kann nicht erstellt werden Bitte anderen Titel waehlen."))
   }
 
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
   dataset_id <- create_empty_dataset(identifier)

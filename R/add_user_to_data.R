@@ -21,9 +21,10 @@ add_user_to_data <- function(username,dataset_uid, permission_list = list("explo
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
   })
   data = list(
     user = list(username = username),
@@ -36,7 +37,7 @@ add_user_to_data <- function(username,dataset_uid, permission_list = list("explo
 
   data <- data %>% jsonlite::toJSON(auto_unbox = T,na =  "null",pretty = T)
 
-  httr::POST(url = paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_uid,"/security/users"),
+  httr::POST(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_uid,"/security/users"),
        body = data,
        httr::authenticate(usr, pw),verbose=T)
 

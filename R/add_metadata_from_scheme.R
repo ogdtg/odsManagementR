@@ -30,7 +30,7 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   #names(metadata_test)[1]<-"Metadata"
   metadata_test["Beispiel"]<-NULL
 
-  meta_template_df <- readRDS("meta_template_df.rds") # Metadaten Schema laden um Loop durchführen zu können
+  # meta_template_df <- readRDS("meta_template_df.rds") # Metadaten Schema laden um Loop durchführen zu können
 
   part_id <- metadata_test$Eintrag[which(metadata_test$Metadata=="Kennung")]
   title_meta <- metadata_test$Eintrag[which(metadata_test$Metadata=="Titel")]

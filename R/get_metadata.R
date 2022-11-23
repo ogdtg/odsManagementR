@@ -2,7 +2,7 @@
 #'
 #'Funktion um Metadaten eines bestimmten Datensatzes zu erhalten
 #'
-#' @param dataset_uid
+#' @param dataset_uid kann metadata_catalog entnommen werden
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
@@ -16,12 +16,14 @@ get_metadata <- function(dataset_uid){
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
-  url = paste0('https://data.tg.ch/api/management/v2/datasets/',dataset_uid,'/metadata')
+  url = paste0('https://',domain,'/api/management/v2/datasets/',dataset_uid,'/metadata')
 
   res <- httr::GET(url = url,
                    httr::authenticate(usr, pw))

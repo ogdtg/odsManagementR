@@ -16,13 +16,15 @@ create_empty_dataset <- function(identifier) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
   tryCatch({
-    res <- httr::POST(url = 'https://data.tg.ch/api/management/v2/datasets/',
+    res <- httr::POST(url = 'https://',domain,'/api/management/v2/datasets/',
                httr::authenticate(usr, pw),
                body = jsonlite::toJSON(list(metas = list(
                  default = list(title = identifier)

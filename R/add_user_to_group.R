@@ -20,17 +20,18 @@ add_user_to_group <- function(group_id,user_list){
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
-  })
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
 
+  })
 
   data = list(usernames = user_list) %>% jsonlite::toJSON(auto_unbox = T)
 
   res <-
     httr::POST(
-      url = paste0('https://data.tg.ch/api/management/v2/groups/',group_id,'/users'),
+      url = paste0('https://',domain,'/api/management/v2/groups/',group_id,'/users'),
       body = data,
       httr::authenticate(usr, pw)
     )

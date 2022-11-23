@@ -20,9 +20,11 @@ set_metadata <- function(dataset_id,template,meta_name,meta_value) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
 
@@ -32,7 +34,7 @@ set_metadata <- function(dataset_id,template,meta_name,meta_value) {
                                       value = meta_value)))
 
   new_val = final_list %>% toJSON(auto_unbox = T)
-  httr::PUT(url = paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_id,"/metadata/"),
+  httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/"),
             httr::authenticate(usr, pw),
             body = new_val)
 }

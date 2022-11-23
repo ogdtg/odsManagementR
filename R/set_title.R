@@ -17,12 +17,14 @@ set_title = function(title,dataset_id) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
-  httr::PUT(url = paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_id,"/metadata/default/title"),
+  httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/default/title"),
             httr::authenticate(usr, pw),
             body = jsonlite::toJSON(list(value=title,override_remote_value=TRUE), auto_unbox = T))
 }

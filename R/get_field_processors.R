@@ -15,13 +15,14 @@ get_field_processors <- function(dataset_uid) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
 
   })
 
-  res <- httr::GET(paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_uid,"/fields_specifications/"),
+  res <- httr::GET(paste0("https://",domain,"/api/management/v2/datasets/",dataset_uid,"/fields_specifications/"),
                    httr::authenticate(usr, pw))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()

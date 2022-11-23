@@ -7,7 +7,7 @@
 setUsername(username)
 }
 \arguments{
-\item{username}{}
+\item{username}{ODS Username}
 }
 \description{
 setUsername

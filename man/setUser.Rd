@@ -4,14 +4,16 @@
 \alias{setUser}
 \title{setUser}
 \usage{
-setUser(username, password, apikey)
+setUser(username, password, apikey = NULL, domain)
 }
 \arguments{
 \item{username}{ODS-Username}
 
 \item{password}{ODS-Passwort}
 
-\item{apikey}{ODS-API Key}
+\item{apikey}{API-Key mit den benötigten Berechtigungen (default=NULL)}
+
+\item{domain}{Domain des Portals (z.B. data.tg.ch)}
 }
 \description{
 Funktion um User Daten zu setzen um package nutzen zu können

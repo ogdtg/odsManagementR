@@ -4,7 +4,7 @@ user <- new.env()
 # Sets the value of the variable
 #' setUsername
 #'
-#' @param username
+#' @param username ODS Username
 #'
 #' @export
 #'
@@ -15,7 +15,7 @@ setUsername <- function(username) {
 # Sets the value of the variable
 #' setKey
 #'
-#' @param apikey
+#' @param apikey API-Key mit den benötigten Berechtigungen
 #'
 #' @export
 #'
@@ -45,7 +45,7 @@ getKey <- function() {
 # Sets the value of the variable
 #' setPassword
 #'
-#' @param password
+#' @param password ODS-Passwort
 #'
 #' @export
 #'
@@ -63,18 +63,42 @@ getPassword<- function() {
   return(get("password", user))
 }
 
+#' setDomain
+#'
+#' @param domain Domain des Portals (z.B. data.tg.ch)
+#'
+#' @export
+#'
+setDomain <- function(domain) {
+  domain <- gsub("https://","",domain)
+  domain <- gsub("http://","",domain)
+  domain <- gsub("http:/","",domain)
+  assign("domain", domain, env=user)
+}
+
+#' getDomain
+#'
+#' @return domain
+#' @export
+#'
+getDomain<- function() {
+  return(get("domain", user))
+}
+
 #' setUser
 #'
 #'Funktion um User Daten zu setzen um package nutzen zu können
 #'
 #' @param username ODS-Username
 #' @param password ODS-Passwort
-#' @param apikey ODS-API Key
+#' @param apikey API-Key mit den benötigten Berechtigungen (default=NULL)
+#' @param domain Domain des Portals (z.B. data.tg.ch)
 #'
 #' @export
 #'
-setUser <- function(username,password,apikey){
+setUser <- function(username,password,apikey=NULL,domain){
   setUsername(username)
   setPassword(password)
   setKey(apikey)
+  setDomain(domain)
 }

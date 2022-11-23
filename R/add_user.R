@@ -20,9 +20,11 @@ add_user <- function(email_list) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
 
@@ -30,7 +32,7 @@ add_user <- function(email_list) {
 
   res <-
     httr::POST(
-      url = 'https://data.tg.ch/api/management/v2/users/',
+      url = 'https://',domain,'/api/management/v2/users/',
       body = data,
       httr::authenticate(usr, pw)
     )

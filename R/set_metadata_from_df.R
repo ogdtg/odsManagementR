@@ -17,11 +17,12 @@ set_metadata_from_df <- function(dataset_id,metas,title) {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
-  })
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
 
+  })
 
 
   final_list <- list()
@@ -54,7 +55,7 @@ set_metadata_from_df <- function(dataset_id,metas,title) {
   new_values <- list(metas=final_list) %>% jsonlite::toJSON(auto_unbox = T)
 
 
-  httr::PUT(url = paste0("https://data.tg.ch/api/management/v2/datasets/",dataset_id,"/metadata/"),
+  httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/"),
             httr::authenticate(usr, pw),
             body = new_values)
 

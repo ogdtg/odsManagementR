@@ -7,7 +7,7 @@
 get_metadata(dataset_uid)
 }
 \arguments{
-\item{dataset_uid}{}
+\item{dataset_uid}{kann metadata_catalog entnommen werden}
 }
 \value{
 Datensatz mit Metadaten eines gewünschten Datensatzes

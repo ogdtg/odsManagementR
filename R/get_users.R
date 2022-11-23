@@ -14,9 +14,11 @@ get_users <- function() {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
 
@@ -25,7 +27,7 @@ get_users <- function() {
   result = list()
   while (counter==100) {
     page = page + 1
-    res <- httr::GET(url = "https://data.tg.ch/api/management/v2/users/",
+    res <- httr::GET(url = "https://",domain,"/api/management/v2/users/",
                      query = list(rows = 100,
                                   page=page),
                      httr::authenticate(usr, pw))

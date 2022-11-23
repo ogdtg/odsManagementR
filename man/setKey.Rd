@@ -7,7 +7,7 @@
 setKey(apikey)
 }
 \arguments{
-\item{apikey}{}
+\item{apikey}{API-Key mit den benötigten Berechtigungen}
 }
 \description{
 setKey

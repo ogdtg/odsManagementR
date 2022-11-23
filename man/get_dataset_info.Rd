@@ -6,8 +6,11 @@
 \usage{
 get_dataset_info(
  
-    path = "Y:\\\\SK\\\\SKStat\\\\Open Government Data _ OGD\\\\Zusammenstellung Hilfsmittel OGD\\\\Selbst erstellte Hilfsmittel\\\\data_catalog.csv"
+    path = "Y:/SK/SKStat/Open Government Data _ OGD/Zusammenstellung Hilfsmittel OGD/Selbst erstellte Hilfsmittel/data_catalog.csv"
 )
+}
+\arguments{
+\item{path}{Pfad zum Speicherort des lokalen Katalogs (default ist angegeben)}
 }
 \description{
 Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.

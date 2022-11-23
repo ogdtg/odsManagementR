@@ -13,13 +13,15 @@
 #' @importFrom dplyr select
 #' @export
 #'
-get_dataset_info <- function(path = "Y:\\SK\\SKStat\\Open Government Data _ OGD\\Zusammenstellung Hilfsmittel OGD\\Selbst erstellte Hilfsmittel\\data_catalog.csv") {
+get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zusammenstellung Hilfsmittel OGD/Selbst erstellte Hilfsmittel/data_catalog.csv") {
   tryCatch({
     pw=getPassword()
     usr=getUsername()
+    domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser(username,password,domain) first.")
+
   })
 
   counter = 100
@@ -27,7 +29,7 @@ get_dataset_info <- function(path = "Y:\\SK\\SKStat\\Open Government Data _ OGD\
   result = list()
   while (counter==100) {
     page = page + 1
-    res <- httr::GET(url = "https://data.tg.ch/api/management/v2/datasets/",
+    res <- httr::GET(url = "https://",domain,"/api/management/v2/datasets/",
                query = list(rows = 100,
                             page=page),
                httr::authenticate(usr, pw))

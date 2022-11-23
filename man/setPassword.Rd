@@ -7,7 +7,7 @@
 setPassword(password)
 }
 \arguments{
-\item{password}{}
+\item{password}{ODS-Passwort}
 }
 \description{
 setPassword
