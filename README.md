@@ -136,7 +136,7 @@ Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibung
 Die Funktion benötigt als Parameter die `dataset_id`, den aktuellen namen im ODS (`old_name`), den neuen Namen (`new_name`) sowie das neue Label (`new_label`). Eigentlich sollte das Label den Namen bezeichnen, der beim Hovern über den Spaltennamen im ODS erscheint. Allerdings erscheint im ODS die Beschreibung der Spalten. Deshalb ist zu empfehlen den gleichen Wert für `new_name` und `new_label` zu verwenden.
 ```r 
 rename_field(
-        dataset_uid = "da-xxxxxx"",
+        dataset_uid = "da-xxxxxx",
         old_name = "current_var_name",
         new_name = "new_var_name",
         new_label = "new_var_name"
@@ -151,7 +151,7 @@ Innerhalb der wrapper Funktion wird gecheckt, ob sich der aktuelle Name im ODS v
 Mit der Funktion kann eine Variablenbeschreibung hinzugefügt/geändert werden. Dazu muss wieder die entsprechende `dataset_uid` sowie der Name der Variable (`field_name`)  angegeben werden. Die neue Beschreibung kann dann als `new_description` Parameter angegeben werden.
 ```r
 add_description_to_field(
-      dataset_uid = "da-xxxxxx"",
+      dataset_uid = "da-xxxxxx",
       field_name = "current_var_name",
       new_description = "New Description vor variable"
     )
@@ -164,7 +164,7 @@ Die Definition des Datentyps funktioniert nach dem gleichen Prinzip wie das Hinz
 
 ```r
 add_type(
-      dataset_uid = "da-xxxxxx"",
+      dataset_uid = "da-xxxxxx",
       field_name = "current_var_name",
       new_type  = "int"
     )
@@ -178,7 +178,7 @@ Wenn im Schema keine Einheit angegeben wird, überspringt die wrapper Funktion d
 
 ```r
 add_unit(
-        dataset_uid = "da-xxxxxx"",
+        dataset_uid = "da-xxxxxx",
         field_name = "current_var_name",
         unit = "kg"
         )
@@ -201,4 +201,14 @@ add_datetime_precision(
         field_name = spalten$Name_Neu[i],
         annotation_args = list(spalten$precision[i])
       )
+```
+
+## Daten hinzufügen
+
+Datensätze können mithilfe der `delete_dataset` gelöscht werden. Dazu muss lediglich die `dataset_uid`, die `dataset_id` oder der Titel des Datensatzes angegeben werden. Vor der Löschung wird ausserdem noch einmal nach einer Bestätigung gefragt, um versehentliche Löschungen zu vermeiden. 
+
+```r
+
+delete_dataset("da-xxxxxx")
+
 ```
