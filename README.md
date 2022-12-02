@@ -197,9 +197,9 @@ Hierbei handelt es sich um eine sogenannte "Annotation". Weitere Annotationen k√
 
 ```r 
 add_datetime_precision(
-        dataset_uid = dataset_uid,
-        field_name = spalten$Name_Neu[i],
-        annotation_args = list(spalten$precision[i])
+        dataset_uid = "da-xxxxxx",
+        field_name = "jahr",
+        annotation_args = list("year")
       )
 ```
 
