@@ -7,7 +7,7 @@
 
 Mit odsManagementR kann die ODS Management API direkt aus R heraus bedient werden. So können Datensätze aufgeschaltet, Metadaten verwaltet oder User hinzugefügt werden, ohne das ODS Online Interface für das Backend benutzen zu müssen. 
 
-***HINWEIS:*** *Die vorliegende Beschreibung bezieht sich auf das Datenportal des Kanton Thurgaus [data.tg.ch](https://data.tg.ch/pages/start/). Zwar können die meisten Funktionen auch auf alle anderen ODS Portale angewendet werden, die hinterlgeten API Calls sind aber auf den Kanton Thurgau ausgelegt.*
+
 
 ## Installation
 
