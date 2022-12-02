@@ -20,17 +20,47 @@ library(odsManagementR)
 
 ## User initialisieren
 
-Um Zugang zum jeweiligen ODS Portal zu bekommen und die Funktionalitäten der API nutzen zu können, muss zuerst ein User initialisiert werden. Dazu wird die `setUser` Funktion verwendet.
-Hierbei werden einfach die ODS Zugangsdaten eingegeben, sowie die Domain des Portals (z.B. data.tg.ch). Vorgesehen ist ausserdem, dass in einer späteren Phase die Zugangsdaten durch einen API Key erstezt werden. Dies funktioniert allerdings aufgrund fehlender Berechtigungen bis jetzt nicht. Auch wenn es sich um ein internes Package handelt, ist zu empfehlen, die Zugangsdaten in einem `.Renviron` File zu speichen und von dort einzulesen.
+Um Zugang zum jeweiligen ODS Portal zu bekommen und die Funktionalitäten der API nutzen zu können, muss zuerst ein User initialisiert werden. Dazu wird die `initialize_user` Funktion verwendet.
+Diese Funktion sollte nur dann benutzt werden, wenn noch kein API Key mit den entsprechenden Berechtigungen erstellt wurde.
+
+***ACHTUNG:*** *Die API Keys die man über das Frontend von ODS erstellen kann haben NICHT die ausreichenden Berechtigungen um die Management API nutzen zu können. Stand jetzt muss der API Key daher zwingend über einen API Call erstellt werden, auch wenn dies in der Dokumentation anders beschrieben wird.*
+
+Mit der `initialize_user` wird ein API Key erstellt und dieser direkt initialisiert, sodass das Package funktionsfähig wird.
 
 ```r
-setUser(username = "max.mustermann@tg.ch",
-        password = "XXXXXXXXXX",
-        apikey = "XXXXXXXXXX",
-        domain = "data.tg.ch")
+initialize_user(username = "max.mustermann@tg.ch",
+                password = "xxxxxxxxx",
+                domain = "data.tg.ch")
+```
+Der Key kann sowohl im Frontend unter `https://{domain}/account/api-keys/` als auch über `getKey()` abgerufen werden. Am Besten speichert man den Key als Variable in einem `.Renviron` File, sodass man ihn beim erneuten Nutzen des Packages erneuteinlesen kann. Dann sollte man anstelle der `initialize_user` Funktion die Domain und den Key separat über `setDomain` bzw.`setKey()`.
+
+Die Nutzung des API Keys wird gegenüber der Nutzung von Passwort und Username bevorzugt, da API Keys einfach und schnell wieder gelöscht werden können.
+
+Ein neuer API Key kann auch direkt über die `create_key` Funktion erstellt werden. Hier könenn auch Keys erstellt werden, die nur benutzerdefinierte Berechtigungen besitzen. Dies kann nützlich sein, wenn man zum Beispiel einer Person aus einem Amt Zugang zur API geben möcte, ohne dieser direkt alle Berechtigungen zu erteilen.
+
+Gibt man keine benutzerdefinierte Liste für das Argument `permissions` an, werden per default alle Berechtigungen erteilt.
+
+```r
+apikey <- create_key(
+            key_name="Name des Keys",
+            username="max.mustermann@tg.ch",
+            password = "xxxxxxxxx",
+             domain = "data.tg.ch",
+            permissions = list(
+              "edit_dataset",
+              "publish_dataset"
+              )
+)
+
+#User initialisieren
+setkey(apikey)
+setkey("data.tg.ch")
+
+# Package ist nun funktionsfähig
 
 ```
-Die Daten werden dann in einem Environment namens `User` gespeichert und tauchen somit nicht im Global Environment auf. Daten können mit `setUsername`,`setPassword`,`setApikey` und `setDomain` auch seperat gesetzt werden. Abgerufen werden können die Daten mit entsprechenden get-Funktionen (z.B. `getUsername`)
+
+Die Daten werden dann in einem Environment namens `User` gespeichert und tauchen somit nicht im Global Environment auf. Abgerufen werden können die Daten mit get-Funktionen (z.B. `getKey()`, `getDomain()`)
 
 
 ## Liste aller Datensätze erhalten
