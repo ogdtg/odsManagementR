@@ -22,16 +22,6 @@ create_dataset <- function(identifier,title) {
     stop(paste0("Titel schon vergeben an ",title,". Datensatz kann nicht erstellt werden Bitte anderen Titel waehlen."))
   }
 
-  tryCatch({
-    pw=getPassword()
-    usr=getUsername()
-    domain=getDomain()
-  },
-  error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
-
-  })
-
   dataset_id <- create_empty_dataset(identifier)
   set_title(title,dataset_id)
   return(dataset_id)

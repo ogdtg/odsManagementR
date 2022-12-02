@@ -1,7 +1,7 @@
 #' get_dataset_info
 #'
 #' Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
-#' Der Catalog wird in der Variable metadata_catalog gespeichert
+#' Der Catalog wird automatisch in der Variable metadata_catalog gespeichert
 #'
 #' @param path Pfad zum Speicherort des lokalen Katalogs (default ist angegeben)
 #'
@@ -29,7 +29,7 @@ get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zus
   result = list()
   while (counter==100) {
     page = page + 1
-    res <- httr::GET(url = "https://",domain,"/api/management/v2/datasets/",
+    res <- httr::GET(url = paste0("https://",domain,"/api/management/v2/datasets/"),
                query = list(rows = 100,
                             page=page),
                httr::authenticate(usr, pw))
@@ -69,7 +69,7 @@ get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zus
   error = function(cond){
     stop("Katalog konnte nicht gespeichert werden")
   })
-  return(metadata_catalog)
+
 }
 
 

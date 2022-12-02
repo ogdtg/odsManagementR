@@ -14,5 +14,5 @@ get_dataset_info(
 }
 \description{
 Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
-Der Catalog wird in der Variable metadata_catalog gespeichert
+Der Catalog wird automatisch in der Variable metadata_catalog gespeichert
 }

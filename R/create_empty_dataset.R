@@ -24,7 +24,7 @@ create_empty_dataset <- function(identifier) {
   })
 
   tryCatch({
-    res <- httr::POST(url = 'https://',domain,'/api/management/v2/datasets/',
+    res <- httr::POST(url = paste0('https://',domain,'/api/management/v2/datasets/'),
                httr::authenticate(usr, pw),
                body = jsonlite::toJSON(list(metas = list(
                  default = list(title = identifier)

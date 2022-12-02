@@ -18,7 +18,7 @@ list_ods_files = function(){
 
   })
 
-  res <- httr::GET(url = 'https://',domain,'/api/management/v2/files',
+  res <- httr::GET(url = paste0('https://',domain,'/api/management/v2/files'),
                    httr::authenticate(usr, pw))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
