@@ -8,26 +8,25 @@
 #' @export
 #'
 #' @importFrom httr POST
-#' @importFrom httr authenticate
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr upload_file
 #'
 upload_file_to_ods <- function(filepath) {
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    domain=getDomain()
+    key = getKey()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
   files = list(
     `file` = httr::upload_file(filepath)
   )
 
-  res <- httr::POST(url = 'https://data.tg.ch/api/management/v2/files', body = files, encode = 'multipart',
-                    httr::authenticate(usr, pw))
+  res <- httr::POST(url = 'https://',domain,'/api/management/v2/files', body = files, encode = 'multipart',
+                    query=list(apikey=key))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
 

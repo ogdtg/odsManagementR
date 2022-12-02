@@ -96,7 +96,7 @@ getDomain<- function() {
 #'
 #' @export
 #'
-setUser <- function(username,password,apikey=NULL,domain){
+setUser <- function(username=NULL,password=NULL,apikey,domain){
   setUsername(username)
   setPassword(password)
   setKey(apikey)

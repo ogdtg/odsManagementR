@@ -6,18 +6,16 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
-#' @importFrom httr authenticate
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr select
 #' @export
 get_users <- function() {
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key = getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
@@ -29,8 +27,8 @@ get_users <- function() {
     page = page + 1
     res <- httr::GET(url = "https://",domain,"/api/management/v2/users/",
                      query = list(rows = 100,
-                                  page=page),
-                     httr::authenticate(usr, pw))
+                                  page=page,
+                                  apikey = key))
     result[[page]] <- res$content %>%
       rawToChar() %>%
       jsonlite::fromJSON() %>%

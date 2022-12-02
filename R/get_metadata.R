@@ -6,7 +6,6 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
-#' @importFrom httr authenticate
 #'
 #'
 #' @return Datensatz mit Metadaten eines gewünschten Datensatzes
@@ -14,19 +13,18 @@
 #'
 get_metadata <- function(dataset_uid){
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
   url = paste0('https://',domain,'/api/management/v2/datasets/',dataset_uid,'/metadata')
 
   res <- httr::GET(url = url,
-                   httr::authenticate(usr, pw))
+                   query = list(apikey=key))
   result <- res$content %>%
     rawToChar() %>%
     jsonlite::fromJSON()

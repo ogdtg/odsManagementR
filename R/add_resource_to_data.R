@@ -14,8 +14,7 @@
 #'
 add_resource_to_data <-  function(resource,title,dataset_uid){
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key = getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -34,7 +33,7 @@ add_resource_to_data <-  function(resource,title,dataset_uid){
   body <- jsonlite::toJSON(body,auto_unbox = T)
 
   httr::POST(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_uid,"/resources/"),
-             httr::authenticate(usr, pw),
-             body = body)
+             body = body,
+             query = list(apikey = key))
 
 }

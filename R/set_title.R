@@ -15,16 +15,15 @@
 set_title = function(title,dataset_id) {
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
   httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/default/title"),
-            httr::authenticate(usr, pw),
+            query= list(apikey=key),
             body = jsonlite::toJSON(list(value=title,override_remote_value=TRUE), auto_unbox = T))
 }

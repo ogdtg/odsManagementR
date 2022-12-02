@@ -15,8 +15,7 @@ add_group <- function(group_name) {
 
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key = getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -37,7 +36,7 @@ add_group <- function(group_name) {
     httr::POST(
       url = paste0('https://',domain,'/api/management/v2/groups/'),
       body = data,
-      httr::authenticate(usr, pw)
+      query = list(apikey = key)
     )
 
 }

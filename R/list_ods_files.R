@@ -9,8 +9,7 @@
 #'
 list_ods_files = function(){
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -19,7 +18,7 @@ list_ods_files = function(){
   })
 
   res <- httr::GET(url = paste0('https://',domain,'/api/management/v2/files'),
-                   httr::authenticate(usr, pw))
+                   query = list(apikey=key))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
   return(result)

@@ -19,8 +19,7 @@ add_user_to_data <- function(username,dataset_uid, permission_list = list("explo
   }
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -39,6 +38,6 @@ add_user_to_data <- function(username,dataset_uid, permission_list = list("explo
 
   httr::POST(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_uid,"/security/users"),
        body = data,
-       httr::authenticate(usr, pw),verbose=T)
+       query = list(apikey=key),verbose=T)
 
 }

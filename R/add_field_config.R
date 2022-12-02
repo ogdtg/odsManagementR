@@ -11,8 +11,7 @@
 #'
 add_field_config <- function(body, dataset_id){
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key = getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -20,6 +19,6 @@ add_field_config <- function(body, dataset_id){
 
   })
   httr::POST(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/fields_specifications/"),
-             httr::authenticate(usr, pw),
-             body = body)
+             body = body,
+             query = list(apikey=key))
 }

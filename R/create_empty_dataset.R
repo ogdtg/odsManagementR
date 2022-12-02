@@ -14,18 +14,17 @@
 #'
 create_empty_dataset <- function(identifier) {
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
   tryCatch({
     res <- httr::POST(url = paste0('https://',domain,'/api/management/v2/datasets/'),
-               httr::authenticate(usr, pw),
+                      query = list(apikey=key),
                body = jsonlite::toJSON(list(metas = list(
                  default = list(title = identifier)
                )), auto_unbox = T))

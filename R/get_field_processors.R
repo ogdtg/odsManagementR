@@ -13,8 +13,7 @@
 get_field_processors <- function(dataset_uid) {
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -23,7 +22,7 @@ get_field_processors <- function(dataset_uid) {
   })
 
   res <- httr::GET(paste0("https://",domain,"/api/management/v2/datasets/",dataset_uid,"/fields_specifications/"),
-                   httr::authenticate(usr, pw))
+                   query = list(apikey=key))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
   return(result)

@@ -18,8 +18,7 @@ add_user_to_group <- function(group_id,user_list){
   }
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -33,7 +32,7 @@ add_user_to_group <- function(group_id,user_list){
     httr::POST(
       url = paste0('https://',domain,'/api/management/v2/groups/',group_id,'/users'),
       body = data,
-      httr::authenticate(usr, pw)
+      query = list(apikey=key)
     )
 
   test <- res$content %>% rawToChar() %>% jsonlite::fromJSON()

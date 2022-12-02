@@ -4,7 +4,7 @@
 \alias{setUser}
 \title{setUser}
 \usage{
-setUser(username, password, apikey = NULL, domain)
+setUser(username = NULL, password = NULL, apikey, domain)
 }
 \arguments{
 \item{username}{ODS-Username}

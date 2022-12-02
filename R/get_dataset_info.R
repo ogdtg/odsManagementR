@@ -7,7 +7,6 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
-#' @importFrom httr authenticate
 #' @importFrom dplyr bind_rows
 #' @importFrom tidyr unnest
 #' @importFrom dplyr select
@@ -15,12 +14,11 @@
 #'
 get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zusammenstellung Hilfsmittel OGD/Selbst erstellte Hilfsmittel/data_catalog.csv") {
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
@@ -31,8 +29,8 @@ get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zus
     page = page + 1
     res <- httr::GET(url = paste0("https://",domain,"/api/management/v2/datasets/"),
                query = list(rows = 100,
-                            page=page),
-               httr::authenticate(usr, pw))
+                            page=page,
+                            apikey = key))
     result[[page]] <- res$content %>%
       rawToChar() %>%
       jsonlite::fromJSON() %>%

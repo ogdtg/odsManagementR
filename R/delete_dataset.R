@@ -8,12 +8,11 @@
 #'
 delete_dataset <- function(dataset_uid) {
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain = getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser() first.")
   })
   get_dataset_info()
 
@@ -38,7 +37,7 @@ delete_dataset <- function(dataset_uid) {
   if (response %in% c("ja","j","y","yes")) {
     tryCatch({
       httr::DELETE(url = paste0('https://',domain,'/api/management/v2/datasets/',dataset_uid),
-                   httr::authenticate(usr,pw))
+                   query = list(apikey = key))
     },
     error = function(cond){
       stop("Deletion process failed")

@@ -7,7 +7,6 @@
 #' @importFrom jsonlite toJSON
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr POST
-#' @importFrom httr authenticate
 #'
 #' @export
 #'
@@ -18,12 +17,11 @@ add_user <- function(email_list) {
   }
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No Key or Domain initialized. Please use setUser() first.")
 
   })
 
@@ -34,7 +32,7 @@ add_user <- function(email_list) {
     httr::POST(
       url = 'https://',domain,'/api/management/v2/users/',
       body = data,
-      httr::authenticate(usr, pw)
+      query = list(apikey = key)
     )
 
   test <- res$content %>% rawToChar() %>% jsonlite::fromJSON()

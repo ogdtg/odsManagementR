@@ -15,12 +15,11 @@
 set_metadata_from_df <- function(dataset_id,metas,title) {
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
@@ -56,7 +55,7 @@ set_metadata_from_df <- function(dataset_id,metas,title) {
 
 
   httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/"),
-            httr::authenticate(usr, pw),
+            query = list(apikey=key),
             body = new_values)
 
   set_title(title = title,dataset_id = dataset_id )

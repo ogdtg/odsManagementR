@@ -8,7 +8,6 @@
 #'
 #'
 #' @importFrom httr PUT
-#' @importFrom httr authenticate
 #' @importFrom jsonlite toJSON
 #' @export
 #'
@@ -33,19 +32,19 @@ update_group <- function(group_id,group_name=NULL,permission_list=NULL) {
   }
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    domain = getDomain()
+    key = getKey()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password) first.")
+    stop("No User initialized. Please use setUser() first.")
   })
 
 
 
   res <-
     httr::PUT(
-      url = paste0('https://data.tg.ch/api/management/v2/groups/',group_id,"/"),
+      url = paste0('https://',domain,'/api/management/v2/groups/',group_id,"/"),
       body = data,
-      httr::authenticate(usr, pw)
+      query = list(apikey=key)
     )
 }

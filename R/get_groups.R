@@ -12,8 +12,7 @@
 #' @export
 get_groups <- function() {
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key=getKey()
     domain=getDomain()
   },
   error = function(cond){
@@ -29,7 +28,8 @@ get_groups <- function() {
     page = page + 1
     res <- httr::GET(url = "https://",domain,"/api/management/v2/groups/",
                      query = list(rows = 100,
-                                  page=page),
+                                  page=page,
+                                  apikey = key),
                      httr::authenticate(usr, pw))
     result[[page]] <- res$content %>%
       rawToChar() %>%

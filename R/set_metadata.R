@@ -5,7 +5,6 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom jsonlite toJSON
 #' @importFrom httr PUT
-#' @importFrom httr authenticate
 #'
 #' @param dataset_id kann metadata_catalog entnommen werden
 #' @param template kann metadata_catalog entnommen werden
@@ -18,12 +17,11 @@
 set_metadata <- function(dataset_id,template,meta_name,meta_value) {
 
   tryCatch({
-    pw=getPassword()
-    usr=getUsername()
+    key = getKey()
     domain=getDomain()
   },
   error = function(cond){
-    stop("No User initialized. Please use setUser(username,password,domain) first.")
+    stop("No User initialized. Please use setUser() first.")
 
   })
 
@@ -35,6 +33,6 @@ set_metadata <- function(dataset_id,template,meta_name,meta_value) {
 
   new_val = final_list %>% toJSON(auto_unbox = T)
   httr::PUT(url = paste0("https://",domain,"/api/management/v2/datasets/",dataset_id,"/metadata/"),
-            httr::authenticate(usr, pw),
+            query=list(apikey=key),
             body = new_val)
 }
