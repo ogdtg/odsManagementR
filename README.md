@@ -54,7 +54,7 @@ apikey <- create_key(
 
 #User initialisieren
 setkey(apikey)
-setkey("data.tg.ch")
+setDomain("data.tg.ch")
 
 # Package ist nun funktionsfähig
 
@@ -233,7 +233,7 @@ add_datetime_precision(
       )
 ```
 
-## Daten hinzufügen
+## Daten löschen
 
 Datensätze können mithilfe der `delete_dataset` gelöscht werden. Dazu muss lediglich die `dataset_uid`, die `dataset_id` oder der Titel des Datensatzes angegeben werden. Vor der Löschung wird ausserdem noch einmal nach einer Bestätigung gefragt, um versehentliche Löschungen zu vermeiden. 
 
