@@ -52,13 +52,6 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       field_name = spalten$Name_Neu[i],
       new_type  = spalten$type[i]
     )
-    if (!is.na(spalten$precision[i])) {
-      add_datetime_precision(
-        dataset_uid = dataset_uid,
-        field_name = spalten$Name_Neu[i],
-        annotation_args = list(spalten$precision[i])
-      )
-    }
 
     if (!is.na(spalten$kurz[i])) {
       add_unit(
@@ -67,6 +60,13 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
         unit = spalten$kurz
       )
     }
-  }
 
+    if (!is.na(spalten$precision[i])) {
+      add_timeserie_precision(
+        dataset_uid = dataset_uid,
+        field_name = spalten$Name_Neu[i],
+        annotation_args = spalten$precision[i]
+      )
+    }
+  }
 }

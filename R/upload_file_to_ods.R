@@ -25,7 +25,7 @@ upload_file_to_ods <- function(filepath) {
     `file` = httr::upload_file(filepath)
   )
 
-  res <- httr::POST(url = 'https://',domain,'/api/management/v2/files', body = files, encode = 'multipart',
+  res <- httr::POST(url = paste0('https://',domain,'/api/management/v2/files'), body = files, encode = 'multipart',
                     query=list(apikey=key))
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
