@@ -32,7 +32,7 @@ initialize_user(username = "max.mustermann@tg.ch",
                 password = "xxxxxxxxx",
                 domain = "data.tg.ch")
 ```
-Der Key kann sowohl im Frontend unter `https://{domain}/account/api-keys/` als auch über `getKey()` abgerufen werden. Am Besten speichert man den Key als Variable in einem `.Renviron` File, sodass man ihn beim erneuten Nutzen des Packages erneuteinlesen kann. Dann sollte man anstelle der `initialize_user` Funktion die Domain und den Key separat über `setDomain` bzw.`setKey()`.
+Der Key kann sowohl im Frontend unter `https://{domain}/account/api-keys/` als auch über `getKey()` abgerufen werden. Am Besten speichert man den Key als Variable in einem `.Renviron` File, sodass man ihn beim erneuten Nutzen des Packages erneuteinlesen kann. Dann sollte man anstelle der `initialize_user` Funktion die Domain und den Key separat über `setDomain` bzw.`setKey`.
 
 Die Nutzung des API Keys wird gegenüber der Nutzung von Passwort und Username bevorzugt, da API Keys einfach und schnell wieder gelöscht werden können.
 
@@ -148,18 +148,21 @@ filename_ods <- upload_file_to_ods("path/to/upload_data.csv")
 Nachdem das CSV File hochgeladen wurde, muss es noch mit dem entsprechenden Metadatensatz verknüpft werden. Dies kann mithilfe der `add_resource_to_data` bewerkstelligt werden. Hierzu wird die vorhin erwähnte `file_id` als Parameter benötigt. Diese kann auch der File Liste entnommen werden, die durch `list_ods_files` erzeugt wird. Als zweiter Parameter muss die `dataset_uid` des Datensatzes mit dem das File verknüpft werden soll, angegeben werden. Schliesslich muss ein Titel für die Ressource angegeben werden.
 
 ```r
-add_resource_to_data(resource = filename_ods$file_id,dataset_uid = dataset_uid,title = "The new resource Title")
+add_resource_to_data(resource = filename_ods$file_id,
+                      dataset_uid = dataset_uid,
+                      title = "The new resource Title")
 # Uses the filename_ods list created by the upload_file_to_ods command
 ```
 
 ### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
 
-Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden vier Funktionen verwendet:
+Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden fünf Funktionen verwendet:
 
 * `rename_field`
 * `add_description_to_field`
 * `add_type`
 * `add_unit`
+* `add_timeserie_precision`
 
 #### rename_field
 
@@ -215,25 +218,23 @@ add_unit(
 # adds unit kilogramm
 ```
 
-#### add_datetime_precision
+#### add_timeserie_precision
 
-***Hinweis:*** *Diese Funktion liefert zwar den Status Code 200 (=erfolgreicher API Call), jedoch wird die timeserie precision nicht verändert. Fehler muss mit ODS geklärt werden.*
 
 Mit dieser Funktion kann bestimmt werden wie Datumsangaben angezeigt werden sollen. Als `year` oder `day` im Falle von `date`; als `hour` oder `minute` für `datetime`.
 Hierbei handelt es sich um eine sogenannte "Annotation". Weitere Annotationen können [hier](https://betahelp.opendatasoft.com/management-api/#annotate) eingesehen werden.
 
 
-*Wichtig ist, dass der Parameter `annotation_args` als `list` an die Funktion übergeben wird.*
 
 ```r 
 add_datetime_precision(
         dataset_uid = "da-xxxxxx",
         field_name = "jahr",
-        annotation_args = list("year")
+        annotation_args = "year"
       )
 ```
 
-## Daten löschen
+## Datensatz löschen
 
 Datensätze können mithilfe der `delete_dataset` gelöscht werden. Dazu muss lediglich die `dataset_uid`, die `dataset_id` oder der Titel des Datensatzes angegeben werden. Vor der Löschung wird ausserdem noch einmal nach einer Bestätigung gefragt, um versehentliche Löschungen zu vermeiden. 
 
