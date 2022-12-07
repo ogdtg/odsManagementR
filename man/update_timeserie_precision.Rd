@@ -4,7 +4,7 @@
 \alias{update_timeserie_precision}
 \title{update_timeserie_precision}
 \usage{
-update_timeserie_precision(dataset_uid, field_name, annotation_args)
+update_timeserie_precision(dataset_uid, field_name, annotation_args, proc_id)
 }
 \arguments{
 \item{dataset_uid}{kann metdadata_catalog entnommen werden}
@@ -12,6 +12,8 @@ update_timeserie_precision(dataset_uid, field_name, annotation_args)
 \item{field_name}{Name des Feldes}
 
 \item{annotation_args}{Possible arguments are year, month and day for date, hour and minute for datetime}
+
+\item{proc_id}{processor_uid}
 }
 \description{
 update_timeserie_precision

@@ -14,18 +14,8 @@ delete_dataset <- function(dataset_uid) {
   error = function(cond){
     stop("No User initialized. Please use setUser() first.")
   })
-  get_dataset_info()
 
-  if (dataset_uid %in% metadata_catalog$dataset_uid) {
-    dataset_uid <- dataset_uid
-  } else if (dataset_uid %in% metadata_catalog$dataset_id) {
-    dataset_uid <- metadata_catalog$dataset_uid[which(metadata_catalog$dataset_id==dataset_uid)]
-  } else if (dataset_uid %in% metadata_catalog$metas$default$title) {
-    dataset_uid <- metadata_catalog$dataset_uid[which(metadata_catalog$metas$default$title==dataset_uid)]
-  } else {
-    stop("Dataset does not exist.")
-  }
-
+  dataset_uid <- lookup_dataset_uid(dataset_uid)
 
   id <- metadata_catalog$dataset_id[which(metadata_catalog$dataset_uid==dataset_uid)]
   name <- metadata_catalog$metas$default$title[which(metadata_catalog$dataset_uid==dataset_uid)]

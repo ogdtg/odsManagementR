@@ -234,6 +234,17 @@ add_datetime_precision(
       )
 ```
 
+## Datensatz veröffentlichen
+
+Datensätze können mithilfe der `publish_dataset` veröffentlicht werden. Dazu muss lediglich die `dataset_uid` Datensatzes angegeben werden. Es ist zu beachten, dass die Sicherheitseinstellungen (wer kann den Datensatz sehen) mit dieser Funktion NICHT verändert werden. 
+
+```r
+
+publish_dataset("da-xxxxxx")
+
+```
+
+
 ## Datensatz löschen
 
 Datensätze können mithilfe der `delete_dataset` gelöscht werden. Dazu muss lediglich die `dataset_uid`, die `dataset_id` oder der Titel des Datensatzes angegeben werden. Vor der Löschung wird ausserdem noch einmal nach einer Bestätigung gefragt, um versehentliche Löschungen zu vermeiden. 
