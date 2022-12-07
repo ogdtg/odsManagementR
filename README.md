@@ -74,6 +74,18 @@ get_dataset_info(path=path)
 ## creates variable "metadata_catalog" and saves it under path 
 ```
 
+## Ermittlung der dataset_uid
+
+Für viele der aufgeführten Funktionen wird die `dataset_uid` benötigt. Diese unterscheidet sich von der technischen Kennung (`dataset_id`, z.b. `sk-stat-1`). Um diese ODS-interne ID zu ermitteln kann entweder im `metadata_catalog` direkt nachgeschaut werden, oder es kann die `lookup_dataset_uid` Funktion verwendet werden.
+Hier kann einfach der Titel des Datensatzes oder die `dataset_id` als Argument angegeben werden. Die Funktion lädt dann den aktuellen Katalog herunter und ermittelt die entsprechende `dataset_uid` und gibt diese zurück.
+
+```r
+lookup_dataset_uid(id_or_title="dek-gs-4")
+# returns da_1aqp73
+
+lookup_dataset_uid(id_or_title = "Bildungsstatistik Kanton Thurgau")
+# returns da_1aqp73
+```
 
 
 ## Neuen Datensatz erstellen
@@ -85,7 +97,9 @@ Um Datensätze zu erstellen und sie direkt mit den Metadaten aus dem Excel Schem
 Die einzelnen Schritte innerhalb der Funktion werden nachfolgend kurz beschrieben.
 
 ```r
-dataset_uid <- add_metadata_from_scheme(filepath="path/to/schema.xlsx", harvesting = TRUE, zuschreibungen = NULL)
+dataset_uid <- add_metadata_from_scheme(filepath="path/to/schema.xlsx", 
+                                        harvesting = TRUE, 
+                                        zuschreibungen = NULL)
 ```
 
 ### Datensatzkennung erstellen
@@ -100,7 +114,9 @@ Um gleichbleibende Metadaten nicht jedes mal neu einfügen zu müssen, lohnt es 
 Hierbei muss die `dataset_uid` des zu kopierenden Datensatzes als `copy_id`angegeben werden. Ausserdem die neue Kennung als `new_id` sowie der neue Titel als `title`. Hier bitte auf die richtige Kennung und einen eindeutigen Titel achten. Die Funktion gibt die `dataset_uid` des neu erzeugten Datensatz zurück.
 
 ```r
-dataset_uid <- duplicate_dataset(copy_id = "da_xxxxxx",new_id = dataset_id,title = new_title)
+dataset_uid <- duplicate_dataset(copy_id = "da_xxxxxx",
+                                new_id = dataset_id,
+                                title = new_title)
 ## returns dataset_uid in format da-xxxxxx
 ```
 
