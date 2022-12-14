@@ -8,7 +8,6 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #' @importFrom dplyr bind_rows
-#' @importFrom tidyr unnest
 #' @importFrom dplyr select
 #' @export
 #'
@@ -48,13 +47,11 @@ get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zus
   }
   local_df <-
     metadata_catalog %>%
-    tidyr::unnest_wider(metas) %>%
-    tidyr::unnest(default) %>%
-    tidyr::unnest(visualization) %>%
-    tidyr::unnest(internal) %>%
-    tidyr::unnest(dcat) %>%
-    tidyr::unnest(dcat_ap_ch) %>%
-    dplyr::select(dataset_uid,dataset_id,title,creator,publisher)
+    dplyr::select(dataset_uid,dataset_id) %>%
+    cbind(metadata_catalog$metas$default$title) %>%
+    cbind(metadata_catalog$metas$default$publisher) %>%
+    cbind(metadata_catalog$metas$dcat$creator) %>%
+    setNames(c("datset_uid","dataset_id","title","publisher","creator"))
 
 
   tryCatch({
