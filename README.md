@@ -172,13 +172,15 @@ add_resource_to_data(resource = filename_ods$file_id,
 
 ### Spaltennamen und -beschreibungen sowie Datentypen ergänzen
 
-Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden fünf Funktionen verwendet:
+Abschliessend müsssen noch die Spaltennamen bearbeitet, die Spaltenbeschreibungen hinzugefügt und die entsprechenden Datentypen zugewiesen werden. Wenn vorhanden, können ausserdem noch Einheiten hinzugefügt werden, was eine verbesserte Anzeige im ODS zur Folge hat, die Daten selbst aber nicht verändert. Für diese Aktionen werden die folgenden Funktionen verwendet:
 
 * `rename_field`
 * `add_description_to_field`
 * `add_type`
 * `add_unit`
 * `add_timeserie_precision`
+* `make_fields_sortable`
+
 
 #### rename_field
 
@@ -248,6 +250,26 @@ add_datetime_precision(
         field_name = "jahr",
         annotation_args = "year"
       )
+```
+
+
+#### make_fields_sortable
+
+Da Textfelder per Default nicht sortierbar sidn, muss dies explizit definiert werden. Dazu wird im Prozess die `make_fields_sortable` Funktion verwendet. Diese bewirkt, dass im Frontend alle Spalten mit dem Datentyp "Text" sortierbar werden. Die gewünschten Felder müssen unter dem Argument `fields` als Vektor angegeben werden. Werden Felder angegeben, die einen anderen Datentyp als Text aufweisen, werden diese Felder NICHT verändert.
+
+```r
+make_fields_sortable(
+  dataset_uid = "da-xxxxxx",
+  fields = c("name", "gemeinde", "kanton", "other_text_field")
+)
+
+```
+
+Alternativ kann auch die die `make_all_fields_sortable` Funktion verwendet werden. Diese macht ALLE Spalten mit dem Datentyp Text sortierbar.
+
+```r
+make_all_fields_sortable(dataset_uid = "da-xxxxxx")
+
 ```
 
 ## Datensatz veröffentlichen

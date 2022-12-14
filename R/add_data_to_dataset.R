@@ -33,6 +33,7 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
 
   for (i in 1:nrow(spalten)){
 
+    # Falls nötig Spaltenumbenennen
     if (variables[i]!=spalten$Name_Neu[i]) {
       rename_field(
         dataset_uid = dataset_uid,
@@ -42,16 +43,21 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       )
     }
 
+    # Beschreibung hinzufügen
     add_description_to_field(
       dataset_uid = dataset_uid,
       field_name = spalten$Name_Neu[i],
       new_description = spalten$Variablenbeschreibungen[i]
     )
+
+    # Datentyp definieren
     add_type(
       dataset_uid = dataset_uid,
       field_name = spalten$Name_Neu[i],
       new_type  = spalten$type[i]
     )
+
+    # Falls angegeben Einheit definieren
 
     if (!is.na(spalten$kurz[i])) {
       add_unit(
@@ -60,7 +66,7 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
         unit = spalten$kurz
       )
     }
-
+    # Datumspräzision definieren
     if (!is.na(spalten$precision[i])) {
       add_timeserie_precision(
         dataset_uid = dataset_uid,
@@ -69,4 +75,8 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       )
     }
   }
+
+  # Felder sortierbar machen
+  text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
+  make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 }
