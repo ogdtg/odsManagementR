@@ -85,6 +85,25 @@ getDomain<- function() {
   return(get("domain", user))
 }
 
+#' setPath
+#'
+#' @param path Pfad wo der Metadata Katalog auf lokal gespeichert werden soll
+#'
+#' @export
+#'
+setPath <- function(path) {
+  assign("path", path, env=user)
+}
+
+#' getPath
+#'
+#' @return path
+#' @export
+#'
+getPath<- function() {
+  return(get("path", user))
+}
+
 #' setUser
 #'
 #'Funktion um User Daten zu setzen um package nutzen zu können
@@ -93,10 +112,11 @@ getDomain<- function() {
 #' @param password ODS-Passwort
 #' @param apikey API-Key mit den benötigten Berechtigungen (default=NULL)
 #' @param domain Domain des Portals (z.B. data.tg.ch)
+#' @param path Pfad wo der Metadata Katalog auf lokal gespeichert werden soll
 #'
 #' @export
 #'
-setUser <- function(username=NULL,password=NULL,apikey,domain){
+setUser <- function(username=NULL,password=NULL,apikey,domain,path = NULL){
   setUsername(username)
   setPassword(password)
   setKey(apikey)

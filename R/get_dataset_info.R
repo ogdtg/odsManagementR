@@ -3,21 +3,27 @@
 #' Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
 #' Der Catalog wird automatisch in der Variable metadata_catalog gespeichert
 #'
-#' @param path Pfad zum Speicherort des lokalen Katalogs (default ist angegeben)
-#'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr select
 #' @export
 #'
-get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zusammenstellung Hilfsmittel OGD/Selbst erstellte Hilfsmittel/data_catalog.csv") {
+get_dataset_info <- function() {
   tryCatch({
     key=getKey()
     domain=getDomain()
   },
   error = function(cond){
     stop("No User initialized. Please use setUser() first.")
+
+  })
+
+  tryCatch({
+    path=getPath()
+  },
+  error = function(cond){
+    path = "Y:/SK/SKStat/Open Government Data _ OGD/Zusammenstellung Hilfsmittel OGD/Selbst erstellte Hilfsmittel/data_catalog.csv"
 
   })
 
@@ -62,7 +68,7 @@ get_dataset_info <- function(path = "Y:/SK/SKStat/Open Government Data _ OGD/Zus
       message(paste0("Katalog gespeichert unter ",path))
   },
   error = function(cond){
-    stop("Katalog konnte nicht gespeichert werden")
+    stop("Katalog konnte nicht gespeichert werden. Wurde der Pfad richtig initialisiert")
   })
 
 }
