@@ -54,7 +54,7 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
     }
 
     if (meta_name == "description") {
-      meta_value =paste0(meta_value,"\n\nDatenquelle: ",metadata_test$Eintrag[which(metadata_test$Metadata=="Amt")])
+      meta_value =paste0(meta_value,"<p>Datenquelle: ",metadata_test$Eintrag[which(metadata_test$Metadata=="Amt")],"</p>")
     }
 
     if (meta_name == "keyword") {
