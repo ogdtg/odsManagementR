@@ -6,7 +6,6 @@
 #'
 #' @export
 #'
-#' @examples
 make_all_fields_sortable <- function(dataset_uid) {
   temp <- get_field_processors(dataset_uid)
   names <- unique(temp$args$field)

@@ -19,7 +19,7 @@ Imports:
     readxl,
     tidyr
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 LazyData: true

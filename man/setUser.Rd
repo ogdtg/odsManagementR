@@ -4,7 +4,7 @@
 \alias{setUser}
 \title{setUser}
 \usage{
-setUser(username = NULL, password = NULL, apikey, domain)
+setUser(username = NULL, password = NULL, apikey, domain, path = NULL)
 }
 \arguments{
 \item{username}{ODS-Username}
@@ -14,6 +14,8 @@ setUser(username = NULL, password = NULL, apikey, domain)
 \item{apikey}{API-Key mit den benötigten Berechtigungen (default=NULL)}
 
 \item{domain}{Domain des Portals (z.B. data.tg.ch)}
+
+\item{path}{Pfad wo der Metadata Katalog auf lokal gespeichert werden soll}
 }
 \description{
 Funktion um User Daten zu setzen um package nutzen zu können

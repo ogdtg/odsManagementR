@@ -13,6 +13,7 @@
 add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
 
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
+  spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
 
   if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
     stop("Variablenbeschreibungen unvollstaendig. Bitte Excel Schema checken.")
@@ -63,7 +64,7 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       add_unit(
         dataset_uid = dataset_uid,
         field_name = spalten$Name_Neu[i],
-        unit = spalten$kurz
+        unit = spalten$kurz[i]
       )
     }
     # Datumspräzision definieren

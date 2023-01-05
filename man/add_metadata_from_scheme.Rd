@@ -4,7 +4,12 @@
 \alias{add_metadata_from_scheme}
 \title{add_metadata_from_scheme}
 \usage{
-add_metadata_from_scheme(filepath, harvesting = TRUE, zuschreibungen = NULL)
+add_metadata_from_scheme(
+  filepath,
+  harvesting = TRUE,
+  zuschreibungen = NULL,
+  copy_id = "da_qwsbz2"
+)
 }
 \arguments{
 \item{filepath}{Pfad zum ausgefüllten Schema}
@@ -12,6 +17,8 @@ add_metadata_from_scheme(filepath, harvesting = TRUE, zuschreibungen = NULL)
 \item{harvesting}{default ist TRUE; wenn kein Harvesting zu opendata.swiss gewünscht wird auf FALSE setzen}
 
 \item{zuschreibungen}{character vevtor mit Zuschreibungen}
+
+\item{copy_id}{Dataset UID des Template Datensatz, in dem die gleichbleibenden Metadaten gespeichert sind}
 }
 \value{
 dataset_uid

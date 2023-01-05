@@ -30,7 +30,7 @@ add_user <- function(email_list) {
 
   res <-
     httr::POST(
-      url = 'https://',domain,'/api/management/v2/users/',
+      url = paste0('https://',domain,'/api/management/v2/users/'),
       body = data,
       query = list(apikey = key)
     )
@@ -46,5 +46,6 @@ add_user <- function(email_list) {
     }
 
   }
+  return(test)
 
 }
