@@ -30,6 +30,12 @@ upload_file_to_ods <- function(filepath) {
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
 
+
+
+
+  result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
+
+
   tryCatch({
     exists(result$file_id)
     print(paste0("File uploaded succesfully. Available on ODS with the name ",result$file_id," (",result$url,")"))
