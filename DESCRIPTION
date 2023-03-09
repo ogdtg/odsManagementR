@@ -15,7 +15,6 @@ Imports:
     httr,
     jsonlite,
     magrittr,
-    XLConnect,
     readxl,
     tidyr
 Encoding: UTF-8
