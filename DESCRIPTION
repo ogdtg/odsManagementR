@@ -15,7 +15,9 @@ Imports:
     httr,
     jsonlite,
     magrittr,
+    readr,
     readxl,
+    stringr,
     tidyr
 Encoding: UTF-8
 RoxygenNote: 7.2.1
