@@ -9,7 +9,7 @@
 #' @export
 #'
 update_resource_with_csv <- function(filepath, dataset_uid, resource_uid = NULL) {
-  file_info <- upload_file_to_ods(filename)
+  file_info <- upload_file_to_ods(filepath)
 
   if (is.null(resource_uid)) {
     resource_info <- get_dataset_resource(dataset_uid = dataset_uid)
