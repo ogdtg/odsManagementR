@@ -1,18 +1,17 @@
-#' add_metadata_from_scheme
+#' edit_metadata_from_scheme
 #'
-#' Erstellt neuen Datensatz mit entsprechender Kennung und befüllt diesen mit Metadaten
+#' Bearbeitet Datensatz mit entsprechender Kennung und ersetzt Metadaten mit Daten aus Excel Schema
 #' Funktion kann nur auf genau definiertes Schema angewendet werden.
 #' Alle Metadaten im Schema werden auf das Portal gesladen.
 #'
 #' @param filepath Pfad zum ausgefüllten Schema
 #' @param harvesting default ist TRUE; wenn kein Harvesting zu opendata.swiss gewünscht wird auf FALSE setzen
 #' @param zuschreibungen character vevtor mit Zuschreibungen
-#' @param copy_id Dataset UID des Template Datensatz, in dem die gleichbleibenden Metadaten gespeichert sind
+#' @param dataset_uid Dataset UID des zu bearbeitenden Datensatzes
 #'
-#' @return dataset_uid
 #' @export
 #'
-add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen = NULL,copy_id = "da_qwsbz2") {
+edit_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen = NULL,dataset_uid) {
 
   # Parameter check
   if (!is.logical(harvesting)){
@@ -31,16 +30,14 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   #names(metadata_test)[1]<-"Metadata"
   metadata_test["Beispiel"]<-NULL
 
-  # meta_template_df <- readRDS("meta_template_df.rds") # Metadaten Schema laden um Loop durchführen zu können
-
   part_id <- metadata_test$Eintrag[which(metadata_test$Metadata=="Kennung")]
   title_meta <- metadata_test$Eintrag[which(metadata_test$Metadata=="Titel")]
 
-  #neue Kennung erzeugen
-  dataset_id <- create_new_dataset_id(part_id)
-
-  #template Datensatz mit voreingestellten Metadaten kopieren und dataset_uid für weitere aktionen speichern in Variable
-  dataset_uid <- duplicate_dataset(copy_id = copy_id,new_id = dataset_id,title = title_meta)
+  # #neue Kennung erzeugen
+  # dataset_id <- create_new_dataset_id(part_id)
+  #
+  # #template Datensatz mit voreingestellten Metadaten kopieren und dataset_uid für weitere aktionen speichern in Variable
+  # dataset_uid <- duplicate_dataset(copy_id = copy_id,new_id = dataset_id,title = title_meta)
 
   counter = 1
   theme_list = list()
@@ -95,5 +92,4 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
     })
 
   }
-  return(dataset_uid)
 }
