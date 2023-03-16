@@ -4,15 +4,15 @@
 #'
 #' @param identifier technische Kennung
 #' @param title Titel
-#' @param ... siehe `get_dataset_info`
+#' @param save_local siehe `get_dataset_info`
 #'
 #' @return dataset_uid
 #' @export
 #'
 #'
-create_dataset <- function(identifier,title,...) {
+create_dataset <- function(identifier,title,save_local = TRUE) {
 
-  get_dataset_info(...)
+  get_dataset_info(save_local = save_local)
 
 
   if (identifier %in% metadata_catalog$dataset_id) {

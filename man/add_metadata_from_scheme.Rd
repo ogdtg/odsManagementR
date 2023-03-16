@@ -9,7 +9,7 @@ add_metadata_from_scheme(
   harvesting = TRUE,
   zuschreibungen = NULL,
   copy_id = "da_qwsbz2",
-  ...
+  save_local = TRUE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ add_metadata_from_scheme(
 
 \item{copy_id}{Dataset UID des Template Datensatz, in dem die gleichbleibenden Metadaten gespeichert sind}
 
-\item{...}{siehe get_dataset_info}
+\item{save_local}{siehe get_dataset_info}
 }
 \value{
 dataset_uid

@@ -8,12 +8,12 @@
 #' @param harvesting default ist TRUE; wenn kein Harvesting zu opendata.swiss gewünscht wird auf FALSE setzen
 #' @param zuschreibungen character vevtor mit Zuschreibungen
 #' @param copy_id Dataset UID des Template Datensatz, in dem die gleichbleibenden Metadaten gespeichert sind
-#' @param ... siehe get_dataset_info
+#' @param save_local siehe get_dataset_info
 #'
 #' @return dataset_uid
 #' @export
 #'
-add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen = NULL,copy_id = "da_qwsbz2",...) {
+add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen = NULL,copy_id = "da_qwsbz2",save_local = TRUE) {
 
   # Parameter check
   if (!is.logical(harvesting)){
@@ -38,10 +38,10 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
   title_meta <- metadata_test$Eintrag[which(metadata_test$Metadata=="Titel")]
 
   #neue Kennung erzeugen
-  dataset_id <- create_new_dataset_id(part_id,...)
+  dataset_id <- create_new_dataset_id(part_id,save_local = save_local)
 
   #template Datensatz mit voreingestellten Metadaten kopieren und dataset_uid für weitere aktionen speichern in Variable
-  dataset_uid <- duplicate_dataset(copy_id = copy_id,new_id = dataset_id,title = title_meta,...)
+  dataset_uid <- duplicate_dataset(copy_id = copy_id,new_id = dataset_id,title = title_meta,save_local = save_local)
 
   counter = 1
   theme_list = list()

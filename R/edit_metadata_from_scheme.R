@@ -8,7 +8,6 @@
 #' @param harvesting default ist TRUE; wenn kein Harvesting zu opendata.swiss gewünscht wird auf FALSE setzen
 #' @param zuschreibungen character vevtor mit Zuschreibungen
 #' @param dataset_uid Dataset UID des zu bearbeitenden Datensatzes
-#' @param ... siehe get_dataset_info
 #'
 #' @export
 #'
