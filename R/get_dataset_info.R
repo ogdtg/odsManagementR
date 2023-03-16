@@ -61,17 +61,19 @@ get_dataset_info <- function(save_local = TRUE) {
     cbind(metadata_catalog$metas$dcat$creator) %>%
     setNames(c("datset_uid","dataset_id","title","publisher","creator"))
 
-
-  tryCatch({
-    write_ogd(
-      local_df,
-      path
+  if (save_local) {
+    tryCatch({
+      write_ogd(
+        local_df,
+        path
       )
       message(paste0("Katalog gespeichert unter ",path))
-  },
-  error = function(cond){
-    stop("Katalog konnte nicht gespeichert werden. Wurde der Pfad richtig initialisiert")
-  })
+    },
+    error = function(cond){
+      stop("Katalog konnte nicht gespeichert werden. Wurde der Pfad richtig initialisiert")
+    })
+  }
+
 
 }
 
