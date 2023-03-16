@@ -4,7 +4,7 @@
 \alias{duplicate_dataset}
 \title{duplicate_dataset}
 \usage{
-duplicate_dataset(copy_id, new_id, title)
+duplicate_dataset(copy_id, new_id, title, ...)
 }
 \arguments{
 \item{copy_id}{dataset_uid des zu kopierenden Datensatzes}
@@ -12,6 +12,8 @@ duplicate_dataset(copy_id, new_id, title)
 \item{new_id}{neue technische Kennung}
 
 \item{title}{neuer Titel}
+
+\item{...}{siehe `get_dataset_info`}
 }
 \value{
 new_uid dataset_uid des neu erstellten Datensatz

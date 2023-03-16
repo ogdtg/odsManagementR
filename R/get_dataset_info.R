@@ -3,13 +3,15 @@
 #' Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.
 #' Der Catalog wird automatisch in der Variable metadata_catalog gespeichert
 #'
+#' @param save_local logical ob Katalog lokal gespeichert werden soll (default ist TRUE)
+#'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr select
 #' @export
 #'
-get_dataset_info <- function() {
+get_dataset_info <- function(save_local = TRUE) {
   tryCatch({
     key=getKey()
     domain=getDomain()

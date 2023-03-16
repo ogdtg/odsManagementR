@@ -4,7 +4,10 @@
 \alias{get_dataset_info}
 \title{get_dataset_info}
 \usage{
-get_dataset_info()
+get_dataset_info(save_local = TRUE)
+}
+\arguments{
+\item{save_local}{logical ob Katalog lokal gespeichert werden soll (default ist TRUE)}
 }
 \description{
 Funktion um alle derzeit aufgeschalteten Metadaten herunterzuladen. Hier kann auch die dataset_uid entnommen werden.

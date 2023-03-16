@@ -4,14 +4,15 @@
 #'
 #' @param identifier technische Kennung
 #' @param title Titel
+#' @param ... siehe `get_dataset_info`
 #'
 #' @return dataset_uid
 #' @export
 #'
 #'
-create_dataset <- function(identifier,title) {
+create_dataset <- function(identifier,title,...) {
 
-  get_dataset_info()
+  get_dataset_info(...)
 
 
   if (identifier %in% metadata_catalog$dataset_id) {

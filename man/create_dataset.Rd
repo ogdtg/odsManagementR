@@ -4,12 +4,14 @@
 \alias{create_dataset}
 \title{create_dataset}
 \usage{
-create_dataset(identifier, title)
+create_dataset(identifier, title, ...)
 }
 \arguments{
 \item{identifier}{technische Kennung}
 
 \item{title}{Titel}
+
+\item{...}{siehe `get_dataset_info`}
 }
 \value{
 dataset_uid

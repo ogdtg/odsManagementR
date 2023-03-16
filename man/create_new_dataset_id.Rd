@@ -4,10 +4,12 @@
 \alias{create_new_dataset_id}
 \title{create_new_dataset_id}
 \usage{
-create_new_dataset_id(test_id)
+create_new_dataset_id(test_id, ...)
 }
 \arguments{
 \item{test_id}{String in Form Departement-Amt (Beispiel: sk-stat)}
+
+\item{...}{see `get_dataset_info()`}
 }
 \value{
 dataset_id/technische Kennung

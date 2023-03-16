@@ -8,7 +8,8 @@ add_metadata_from_scheme(
   filepath,
   harvesting = TRUE,
   zuschreibungen = NULL,
-  copy_id = "da_qwsbz2"
+  copy_id = "da_qwsbz2",
+  ...
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ add_metadata_from_scheme(
 \item{zuschreibungen}{character vevtor mit Zuschreibungen}
 
 \item{copy_id}{Dataset UID des Template Datensatz, in dem die gleichbleibenden Metadaten gespeichert sind}
+
+\item{...}{siehe get_dataset_info}
 }
 \value{
 dataset_uid
