@@ -5,7 +5,7 @@
 #' @param dataset_uid dataset_uid des Datensatz, dem die Ressource zugeordnet werden soll
 #' @param resource_uid resource_id of the resource that should be updated
 #'
-#' @return a data.frame
+#' @return a list with two data.frames: the fields and the first 20 rows of the data
 #' @export
 #'
 download_resource = function(dataset_uid,resource_uid){
