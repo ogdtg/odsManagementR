@@ -4,12 +4,14 @@
 \alias{write_ogd2}
 \title{write_ogd2}
 \usage{
-write_ogd2(data, file)
+write_ogd2(data, file, ...)
 }
 \arguments{
 \item{data}{R Dataframe}
 
 \item{file}{Pfad zum Speicherort (muss mit .csv enden)}
+
+\item{...}{see `write.table()`}
 }
 \description{
 Funktion um Datensatz mit korrekten OGD Spezifikationen als csv zu speichern.
