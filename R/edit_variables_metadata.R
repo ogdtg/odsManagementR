@@ -14,21 +14,21 @@ edit_variables_metadata <- function(dataset_uid,schema) {
   if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
     stop("Variablenbeschreibungen unvollstaendig. Bitte Excel Schema checken.")
   }
-  resources <- get_dataset_resource(dataset_uid)
-
-  glimpse_res <-glimpse_resource(dataset_uid = dataset_uid, resource_uid = resources$resource_uid[nrow(resources)])
-
-  variables <- spalten$Name_Neu[spalten$Name_Neu %in% glimpse_res$fields$name]
-  uncommon <- spalten$Name_Neu[!spalten$Name_Neu %in% glimpse_res$fields$name]
-
-  if(length(uncommon)>0){
-    warning(paste0("The following variables are not present in the dataset resource and will therefore be ignored:",uncommon,"\nPlease update the dataset resource first"))
-  }
-  uncommon <- glimpse_res$fields$name[!glimpse_res$fields$name %in% spalten$Name_Neu]
-
-  if(length(uncommon)>0){
-    warning(paste0("The following variables are not present in the metadata file and will therefore be ignored:",uncommon,"\nPlease update the dataset resource first"))
-  }
+  # resources <- get_dataset_resource(dataset_uid)
+  #
+  # glimpse_res <-glimpse_resource(dataset_uid = dataset_uid, resource_uid = resources$resource_uid[nrow(resources)])
+  #
+  # variables <- spalten$Name_Neu[spalten$Name_Neu %in% glimpse_res$fields$name]
+  # uncommon <- spalten$Name_Neu[!spalten$Name_Neu %in% glimpse_res$fields$name]
+  #
+  # if(length(uncommon)>0){
+  #   warning(paste0("The following variables are not present in the dataset resource and will therefore be ignored:",uncommon,"\nPlease update the dataset resource first"))
+  # }
+  # uncommon <- glimpse_res$fields$name[!glimpse_res$fields$name %in% spalten$Name_Neu]
+  #
+  # if(length(uncommon)>0){
+  #   warning(paste0("The following variables are not present in the metadata file and will therefore be ignored:",uncommon,"\nPlease update the dataset resource first"))
+  # }
 
   for (i in 1:nrow(spalten)){
 

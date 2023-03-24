@@ -4,10 +4,12 @@
 \alias{delete_dataset}
 \title{delete_dataset}
 \usage{
-delete_dataset(dataset_uid)
+delete_dataset(dataset_uid, ask = TRUE)
 }
 \arguments{
 \item{dataset_uid}{dataset_uid,dataset_id oder Datensatz Titel können angegeben werden}
+
+\item{ask}{wenn TRUE wird nach Bestätigung durch USer gefragt.}
 }
 \description{
 Funktion um Datensatz zu löschen
