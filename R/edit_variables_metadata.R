@@ -10,6 +10,7 @@
 edit_variables_metadata <- function(dataset_uid,schema) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
+  #
 
   if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
     stop("Variablenbeschreibungen unvollstaendig. Bitte Excel Schema checken.")
