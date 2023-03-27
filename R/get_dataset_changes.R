@@ -25,8 +25,8 @@ get_dataset_changes = function(dataset_uid){
 
   result <- res$content %>% rawToChar() %>% jsonlite::fromJSON()
 
-  if(res$status_code == 500) {
-    stop("API Call returned 500")
+  if(res$status_code != 200) {
+    stop(paste0("API Call returned Error ",res$status_code))
   }
 
   red_result <- result %>%
