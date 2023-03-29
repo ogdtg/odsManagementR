@@ -22,7 +22,7 @@ download_resource = function(dataset_uid,resource_uid){
                    query = list(apikey=key))
 
   string <- res$content %>% rawToChar()
-  if (!stringr::str_detect(string,"[ä|ö|ü|Ü|Ä|Ö]")) {
+  if (!stringr::str_detect(string,"[\u00E4|\u00F6|\u00FC|\u00DC|\u00C4|\u00D6]")) {
     Encoding(string) <- "utf-8"
   }
 
