@@ -12,7 +12,7 @@ download_resource(dataset_uid, resource_uid)
 \item{resource_uid}{resource_id of the resource that should be updated}
 }
 \value{
-a list with two data.frames: the fields and the first 20 rows of the data
+the resource as data.frame
 }
 \description{
 Funktion um Resource eines Datensatzes herunterladen
