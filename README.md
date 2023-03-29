@@ -55,7 +55,7 @@ apikey <- create_key(
 #User initialisieren
 setkey(apikey)
 setDomain("data.tg.ch")
-
+setPath("lokaler/Pfad/zu/data_catalog.csv")
 # Package ist nun funktionsfähig
 
 ```
