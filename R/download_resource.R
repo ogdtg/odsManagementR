@@ -21,7 +21,10 @@ download_resource = function(dataset_uid,resource_uid){
   res <- httr::GET(url = paste0('https://',domain,'/api/management/v2/datasets/',dataset_uid,"/resources/",resource_uid,"/download"),
                    query = list(apikey=key))
 
-  string <- httr::content(res,encoding = "UTF-8", as = "text")
+  string <- res$content %>% rawToChar()
+  if (!stringr::str_detect(string,"[ä|ö|ü|Ü|Ä|Ö]")) {
+    Encoding(string) <- "utf-8"
+  }
 
   comma <- stringr::str_count(string, pattern = ",")
   semicol <- stringr::str_count(string, pattern = ";")
