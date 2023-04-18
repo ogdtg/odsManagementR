@@ -122,3 +122,4 @@ setUser <- function(username=NULL,password=NULL,apikey,domain,path = NULL){
   setKey(apikey)
   setDomain(domain)
 }
+
