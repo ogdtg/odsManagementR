@@ -1,4 +1,4 @@
-#' delete_attachements
+#' delete_attachments
 #'
 #' Funktion um Datensatz Anhänge zu löschen
 #'
@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-delete_attachements <- function(dataset_uid) {
+delete_attachments <- function(dataset_uid) {
   tryCatch({
     key=getKey()
     domain = getDomain()
@@ -15,7 +15,7 @@ delete_attachements <- function(dataset_uid) {
     stop("No User initialized. Please use setUser() first.")
   })
 
-  df <- get_dataset_attachements(dataset_uid = dataset_uid)
+  df <- get_dataset_attachments(dataset_uid = dataset_uid)
   if (length(df)>0){
     invisible(lapply(df$attachment_uid,function(x){
       res <- httr::DELETE(url = paste0('https://',domain,'/api/management/v2/datasets/',dataset_uid,"/attachments/", x),

@@ -1,4 +1,4 @@
-#' get_dataset_attachements
+#' get_dataset_attachments
 #'
 #' Alle Anhänge eines Datensatzes anzeigen
 #'
@@ -10,7 +10,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #'
-get_dataset_attachements = function(dataset_uid){
+get_dataset_attachments = function(dataset_uid){
   tryCatch({
     key=getKey()
     domain=getDomain()
