@@ -5,10 +5,11 @@
 #' @param dataset_uid kann metadta_catalog entnommen werden
 #' @param schema ausgefülltes Schema excel
 #' @param change_names dataframe mit Namen die geändert werden sollen
+#' @param lgr ein lgr Objekt
 #'
 #' @export
 #'
-edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL) {
+edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr = NULL) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
   #

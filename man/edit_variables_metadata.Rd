@@ -4,7 +4,7 @@
 \alias{edit_variables_metadata}
 \title{edit_variables_metadata}
 \usage{
-edit_variables_metadata(dataset_uid, schema, change_names = NULL)
+edit_variables_metadata(dataset_uid, schema, change_names = NULL, lgr = NULL)
 }
 \arguments{
 \item{dataset_uid}{kann metadta_catalog entnommen werden}
@@ -12,6 +12,8 @@ edit_variables_metadata(dataset_uid, schema, change_names = NULL)
 \item{schema}{ausgefülltes Schema excel}
 
 \item{change_names}{dataframe mit Namen die geändert werden sollen}
+
+\item{lgr}{ein lgr Objekt}
 }
 \description{
 Funktion um Namen, Spaltenbeschreibungen und Datentypen zu ändern
