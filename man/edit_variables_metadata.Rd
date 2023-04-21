@@ -4,12 +4,14 @@
 \alias{edit_variables_metadata}
 \title{edit_variables_metadata}
 \usage{
-edit_variables_metadata(dataset_uid, schema)
+edit_variables_metadata(dataset_uid, schema, change_names = NULL)
 }
 \arguments{
 \item{dataset_uid}{kann metadta_catalog entnommen werden}
 
 \item{schema}{ausgefülltes Schema excel}
+
+\item{change_names}{dataframe mit Namen die geändert werden sollen}
 }
 \description{
 Funktion um Namen, Spaltenbeschreibungen und Datentypen zu ändern

@@ -4,10 +4,11 @@
 #'
 #' @param dataset_uid kann metadta_catalog entnommen werden
 #' @param schema ausgefülltes Schema excel
+#' @param change_names dataframe mit Namen die geändert werden sollen
 #'
 #' @export
 #'
-edit_variables_metadata <- function(dataset_uid,schema) {
+edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
   #
@@ -32,48 +33,65 @@ edit_variables_metadata <- function(dataset_uid,schema) {
   }
 
   for (i in 1:nrow(spalten)){
+    restore_uid <- get_latest_change(dataset_uid)
 
-    # Falls nötig Spaltenumbenennen
-    if (variables[i]!=spalten$Name_Neu[i]) {
-      rename_field(
-        dataset_uid = dataset_uid,
-        old_name = variables[i],
-        new_name = spalten$Name_Neu[i],
-        new_label = spalten$Name_Neu[i]
-      )
-    }
+    tryCatch({
+      # Falls nötig Spaltenumbenennen
+      if (variables[i]!=spalten$Name_Neu[i]) {
+        rename_field(
+          dataset_uid = dataset_uid,
+          old_name = variables[i],
+          new_name = spalten$Name_Neu[i],
+          new_label = spalten$Name_Neu[i]
+        )
+      }
 
-    # Beschreibung hinzufügen
-    add_description_to_field(
-      dataset_uid = dataset_uid,
-      field_name = spalten$Name_Neu[i],
-      new_description = spalten$Variablenbeschreibungen[i]
-    )
-
-    # Datentyp definieren
-    add_type(
-      dataset_uid = dataset_uid,
-      field_name = spalten$Name_Neu[i],
-      new_type  = spalten$type[i]
-    )
-
-    # Falls angegeben Einheit definieren
-
-    if (!is.na(spalten$kurz[i])) {
-      add_unit(
+      # Beschreibung hinzufügen
+      add_description_to_field(
         dataset_uid = dataset_uid,
         field_name = spalten$Name_Neu[i],
-        unit = spalten$kurz[i]
+        new_description = spalten$Variablenbeschreibungen[i]
       )
-    }
-    # Datumspräzision definieren
-    if (!is.na(spalten$precision[i])) {
-      add_timeserie_precision(
+
+      # Datentyp definieren
+      add_type(
         dataset_uid = dataset_uid,
         field_name = spalten$Name_Neu[i],
-        annotation_args = spalten$precision[i]
+        new_type  = spalten$type[i]
       )
-    }
+
+      # Falls angegeben Einheit definieren
+
+      if (!is.na(spalten$kurz[i])) {
+        add_unit(
+          dataset_uid = dataset_uid,
+          field_name = spalten$Name_Neu[i],
+          unit = spalten$kurz[i]
+        )
+      }
+      # Datumspräzision definieren
+      if (!is.na(spalten$precision[i])) {
+        add_timeserie_precision(
+          dataset_uid = dataset_uid,
+          field_name = spalten$Name_Neu[i],
+          annotation_args = spalten$precision[i]
+        )
+      }
+
+    }, error = function(e){
+      tryCatch({
+        lgr$error(paste0("Error for",spalten$Name_Neu[i],": ", e))
+        restore_change(restore_uid = restore_uid)
+        lgr$info(paste0("Restored Change ",restore_uid," with status code ",res))
+      }, error = function(cond){
+        warning(paste0("Error for",spalten$Name_Neu[i],": ", e))
+        restore_change(restore_uid = restore_uid)
+        warning(paste0("Restored Change ",restore_uid," with status code ",res))
+      })
+
+
+    })
+
   }
   # Felder sortierbar machen
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]

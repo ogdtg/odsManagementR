@@ -34,6 +34,7 @@ restore_change = function(dataset_uid, restore_uid){
     body = data,
     query = list(apikey=key)
   )
+  print(res)
 
   return(res$status_code)
 }
