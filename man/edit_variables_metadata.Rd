@@ -11,7 +11,7 @@ edit_variables_metadata(dataset_uid, schema, change_names = NULL, lgr = NULL)
 
 \item{schema}{ausgefülltes Schema excel}
 
-\item{change_names}{dataframe mit Namen die geändert werden sollen}
+\item{change_names}{vektor von Variablennamen des Datensatzes mit dem verglichen werden sollen}
 
 \item{lgr}{ein lgr Objekt}
 }
