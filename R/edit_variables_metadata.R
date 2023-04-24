@@ -82,12 +82,14 @@ edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr 
     }, error = function(e){
       tryCatch({
         lgr$error(paste0("Error for",spalten$Name_Neu[i],": ", e))
-        restore_change(restore_uid = restore_uid)
+        restore_change(dataset_uid=dataset_uid,restore_uid = restore_uid)
         lgr$info(paste0("Restored Change ",restore_uid," with status code ",res))
+        stop("process aborted")
       }, error = function(cond){
         warning(paste0("Error for",spalten$Name_Neu[i],": ", e))
-        restore_change(restore_uid = restore_uid)
+        restore_change(dataset_uid=dataset_uid,restore_uid = restore_uid)
         warning(paste0("Restored Change ",restore_uid," with status code ",res))
+        stop("process aborted")
       })
 
 
