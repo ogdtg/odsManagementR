@@ -59,7 +59,7 @@ create_fields_body <- function(configuration_item,edit_field_id,new_name=NULL,ne
       )
     )
     if (is.null(body$args$args[[1]])) {
-      warning("No annotation_args given. Body might not be correct")
+      # warning("No annotation_args given. Body might not be correct")
       body$args$args <- NULL
     }
   }

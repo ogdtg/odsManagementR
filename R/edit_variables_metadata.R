@@ -4,12 +4,13 @@
 #'
 #' @param dataset_uid kann metadta_catalog entnommen werden
 #' @param schema ausgefülltes Schema excel
-#' @param change_names vektor von Variablennamen des Datensatzes mit dem verglichen werden sollen
+#' @param change_names Pfad zum RDS file mit den Original Namen (für Renaming)
 #' @param lgr ein lgr Objekt
+#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen
 #'
 #' @export
 #'
-edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr = NULL) {
+edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr = NULL, save_names = FALSE) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
   #
@@ -21,17 +22,24 @@ edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr 
 
   # glimpse_res <-glimpse_resource(dataset_uid = dataset_uid, resource_uid = resources$resource_uid[nrow(resources)])
 
-  if(is.null(change_names)){
-    variables <- spalten$Name_Neu
-  } else {
-    variables <- change_names
-  }
+  # if(is.null(change_names)){
+  #   variables <- spalten$Name_Neu
+  # } else {
+  #   variables <- readRDS(change_names)
+  # }
+  variables <- tryCatch({
+    readRDS(change_names)
+  }, error = function(e){
+    lgr$info("edit_variables_metadata: No change_names given or file does not exist.")
+    spalten$Name_Neu
+  })
 
   # variables <- spalten$Name_Neu[spalten$Name_Neu %in% glimpse_res$fields$name]
   # uncommon <- spalten$Name_Neu[!spalten$Name_Neu %in% glimpse_res$fields$name]
 
   if (length(variables)!=length(spalten$Name_Neu)){
-    lgr$error(paste0("Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+    lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+    stop()
   }
 
   #
@@ -93,14 +101,14 @@ edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr 
 
     }, error = function(e){
       tryCatch({
-        lgr$error(paste0("Error for",spalten$Name_Neu[i],": ", e))
+        lgr$error(paste0("edit_variables_metadata: Error for",spalten$Name_Neu[i],": ", e))
         res <- restore_change(dataset_uid=dataset_uid,restore_uid = restore_uid)
-        lgr$info(paste0("Restored Change ",restore_uid," with status code ",res))
+        lgr$info(paste0("edit_variables_metadata: Restored Change ",restore_uid," with status code ",res))
         stop("process aborted")
       }, error = function(cond){
         warning(paste0("Error for",spalten$Name_Neu[i],": ", e))
         res <- restore_change(dataset_uid=dataset_uid,restore_uid = restore_uid)
-        warning(paste0("Restored Change ",restore_uid," with status code ",res))
+        warning(paste0("edit_variables_metadata: Restored Change ",restore_uid," with status code ",res))
         stop("process aborted")
       })
 
@@ -111,4 +119,9 @@ edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr 
   # Felder sortierbar machen
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
+
+  if (save_names & !is.null(change_names)){
+    saveRDS(spalten$Name_Neu, file = change_names)
+    lgr$info("edit_variables_metadata: original_names saved")
+  }
 }

@@ -5,7 +5,14 @@
 \title{add_data_to_dataset
 Funktion um csv file hochzuladen, mit Metadaten zu verknüpfen und Spaltenbeschreibungen zu ergänzen (wrapper)}
 \usage{
-add_data_to_dataset(dataset_uid, schema, ogd_file, resource_title)
+add_data_to_dataset(
+  dataset_uid,
+  schema,
+  ogd_file,
+  resource_title,
+  original_name_path = NULL,
+  save_names = FALSE
+)
 }
 \arguments{
 \item{dataset_uid}{kann metadta_catalog entnommen werden}
@@ -15,6 +22,10 @@ add_data_to_dataset(dataset_uid, schema, ogd_file, resource_title)
 \item{ogd_file}{csv file, welches die Daten enthält}
 
 \item{resource_title}{geünschter Titel der Resource auf ODS}
+
+\item{original_name_path}{Pfad zu Originalnamen rds Datei (nur bei Automatischem Ablauf benötigt)}
+
+\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen}
 }
 \description{
 add_data_to_dataset

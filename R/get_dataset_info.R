@@ -48,7 +48,9 @@ get_dataset_info <- function(save_local = TRUE) {
     }
   }
   if(exists("metadata_catalog")){
-    warning("Variable metadata_catalog will b overwritten.")
+    if (save_local){
+      warning("Variable metadata_catalog will b overwritten.")
+    }
     metadata_catalog <<- result %>% dplyr::bind_rows()
   } else {
     metadata_catalog <<- result %>% dplyr::bind_rows()

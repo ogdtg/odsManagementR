@@ -4,16 +4,24 @@
 \alias{edit_variables_metadata}
 \title{edit_variables_metadata}
 \usage{
-edit_variables_metadata(dataset_uid, schema, change_names = NULL, lgr = NULL)
+edit_variables_metadata(
+  dataset_uid,
+  schema,
+  change_names = NULL,
+  lgr = NULL,
+  save_names = FALSE
+)
 }
 \arguments{
 \item{dataset_uid}{kann metadta_catalog entnommen werden}
 
 \item{schema}{ausgefülltes Schema excel}
 
-\item{change_names}{vektor von Variablennamen des Datensatzes mit dem verglichen werden sollen}
+\item{change_names}{Pfad zum RDS file mit den Original Namen (für Renaming)}
 
 \item{lgr}{ein lgr Objekt}
+
+\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen}
 }
 \description{
 Funktion um Namen, Spaltenbeschreibungen und Datentypen zu ändern

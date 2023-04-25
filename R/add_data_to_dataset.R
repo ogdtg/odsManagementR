@@ -5,18 +5,35 @@
 #' @param schema ausgefülltes Schema excel
 #' @param ogd_file csv file, welches die Daten enthält
 #' @param resource_title geünschter Titel der Resource auf ODS
+#' @param original_name_path Pfad zu Originalnamen rds Datei (nur bei Automatischem Ablauf benötigt)
+#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen
 #'
 #' @importFrom readxl read_excel
 #'
 #' @export
 #'
-add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
+add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, original_name_path = NULL, save_names =FALSE){
+
+
 
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
 
   if (sum(is.na(spalten$Variablenbeschreibungen))>0) {
     stop("Variablenbeschreibungen unvollstaendig. Bitte Excel Schema checken.")
+  }
+
+  # check names Path
+  variables <- tryCatch({
+    readRDS(original_name_path)
+  }, error = function(e){
+    lgr$info("add_data_to_dataset: No change_names given or file does not exist.")
+    spalten$Name_Neu
+  })
+
+  if (length(variables)!=length(spalten$Name_Neu)){
+    lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+    stop()
   }
 
 
@@ -27,10 +44,6 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
   add_resource_to_data(filename_ods$file_id,dataset_uid = dataset_uid,title = resource_title)
 
 
-  variables <- read.table(ogd_file,             # Read only header of example data
-                          head = TRUE,
-                          nrows = 1, sep = ",") %>% names()
-
 
   for (i in 1:nrow(spalten)){
 
@@ -39,25 +52,23 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
       rename_field(
         dataset_uid = dataset_uid,
         old_name = variables[i],
-        new_name = spalten$Name_Original[i],
+        new_name = spalten$Name_Neu[i],
         new_label = spalten$Name_Neu[i]
       )
     }
 
-    # kennung muss lowercase sein
-    spalten$Name_Neu[i]
 
     # Beschreibung hinzufügen
     add_description_to_field(
       dataset_uid = dataset_uid,
-      field_name = spalten$Name_Original[i],
+      field_name = spalten$Name_Neu[i],
       new_description = spalten$Variablenbeschreibungen[i]
     )
 
     # Datentyp definieren
     add_type(
       dataset_uid = dataset_uid,
-      field_name = spalten$Name_Original[i],
+      field_name = spalten$Name_Neu[i],
       new_type  = spalten$type[i]
     )
 
@@ -66,7 +77,7 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
     if (!is.na(spalten$kurz[i])) {
       add_unit(
         dataset_uid = dataset_uid,
-        field_name = spalten$Name_Original[i],
+        field_name = spalten$Name_Neu[i],
         unit = spalten$kurz[i]
       )
     }
@@ -74,13 +85,18 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title){
     if (!is.na(spalten$precision[i])) {
       add_timeserie_precision(
         dataset_uid = dataset_uid,
-        field_name = spalten$Name_Original[i],
+        field_name = spalten$Name_Neu[i],
         annotation_args = spalten$precision[i]
       )
     }
   }
 
   # Felder sortierbar machen
-  text_fields <- spalten$Name_Original[which(spalten$type=="text")]
+  text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
+
+  if (save_names & !is.null(original_name_path)){
+    saveRDS(spalten$Name_Neu, file = original_name_path)
+    lgr$info("add_data_to_dataset: original_names saved")
+  }
 }
