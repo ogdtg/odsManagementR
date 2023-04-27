@@ -78,10 +78,10 @@ add_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibungen
 
 
   }
-  themes  <- theme_list %>% unlist()
+  # themes  <- theme_list %>% unlist()
 
   # Bis zu 5 Themen können hinzugefügt werden
-  set_metadata(dataset_id = dataset_uid,template="default",meta_name="theme",meta_value = themes)
+  set_metadata(dataset_id = dataset_uid,template="default",meta_name="theme",meta_value = theme_list)
 
   if (harvesting) {
     # Harvesting separat je nach Wunsch einfügen
