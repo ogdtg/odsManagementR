@@ -51,6 +51,8 @@ edit_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibunge
     }
 
     if (meta_name == "description") {
+      meta_value <- stringr::str_replace_all(meta_value, "\r\n+","</p><p>")
+      meta_value <- paste0("<p>",meta_value,"</p>")
       meta_value =paste0(meta_value,"<p></p><p>Datenquelle: ",metadata_test$Eintrag[which(metadata_test$Metadata=="Amt")],"</p>")
     }
 
