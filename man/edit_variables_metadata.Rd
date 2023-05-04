@@ -7,9 +7,9 @@
 edit_variables_metadata(
   dataset_uid,
   schema,
-  change_names = NULL,
   lgr = NULL,
-  save_names = FALSE
+  save_names = FALSE,
+  dataset_info = NULL
 )
 }
 \arguments{
@@ -17,11 +17,11 @@ edit_variables_metadata(
 
 \item{schema}{ausgefülltes Schema excel}
 
-\item{change_names}{Pfad zum RDS file mit den Original Namen (für Renaming)}
-
 \item{lgr}{ein lgr Objekt}
 
-\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen}
+\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)}
+
+\item{dataset_info}{dataset_info Element (nur bei Automatischem Ablauf benötigt)}
 }
 \description{
 Funktion um Namen, Spaltenbeschreibungen und Datentypen zu ändern

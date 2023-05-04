@@ -4,13 +4,13 @@
 #'
 #' @param dataset_uid kann metadta_catalog entnommen werden
 #' @param schema ausgefülltes Schema excel
-#' @param change_names Pfad zum RDS file mit den Original Namen (für Renaming)
 #' @param lgr ein lgr Objekt
-#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen
+#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)
+#' @param dataset_info dataset_info Element (nur bei Automatischem Ablauf benötigt)
 #'
 #' @export
 #'
-edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr = NULL, save_names = FALSE) {
+edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = FALSE, dataset_info = NULL) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
   #
@@ -120,8 +120,9 @@ edit_variables_metadata <- function(dataset_uid,schema, change_names = NULL,lgr 
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
-  if (save_names & !is.null(change_names)){
-    saveRDS(spalten$Name_Neu, file = change_names)
-    lgr$info("edit_variables_metadata: original_names saved")
-  }
+  if (save_names & !is.null(dataset_info)){
+      dataset_info$original_names <- spalten$Name_Neu
+      lgr$info("add_data_to_dataset: original_names saved")
+      return(dataset_info)
+    }
 }

@@ -5,15 +5,14 @@
 #' @param schema ausgefülltes Schema excel
 #' @param ogd_file csv file, welches die Daten enthält
 #' @param resource_title geünschter Titel der Resource auf ODS
-#' @param original_name_path Pfad zu Originalnamen rds Datei (nur bei Automatischem Ablauf benötigt)
-#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen
+#' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)
+#' @param dataset_info dataset_info Element (nur bei Automatischem Ablauf benötigt)
 #'
 #' @importFrom readxl read_excel
 #'
 #' @export
 #'
-add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, original_name_path = NULL, save_names =FALSE){
-
+add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save_names =FALSE, dataset_info = NULL){
 
 
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
@@ -95,8 +94,9 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, orig
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
-  if (save_names & !is.null(original_name_path)){
-    saveRDS(spalten$Name_Neu, file = original_name_path)
+  if (save_names & !is.null(dataset_info)){
+    dataset_info$original_names <- spalten$Name_Neu
     lgr$info("add_data_to_dataset: original_names saved")
+    return(dataset_info)
   }
 }

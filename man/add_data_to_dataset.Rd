@@ -10,8 +10,8 @@ add_data_to_dataset(
   schema,
   ogd_file,
   resource_title,
-  original_name_path = NULL,
-  save_names = FALSE
+  save_names = FALSE,
+  dataset_info = NULL
 )
 }
 \arguments{
@@ -23,9 +23,9 @@ add_data_to_dataset(
 
 \item{resource_title}{geünschter Titel der Resource auf ODS}
 
-\item{original_name_path}{Pfad zu Originalnamen rds Datei (nur bei Automatischem Ablauf benötigt)}
+\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)}
 
-\item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen}
+\item{dataset_info}{dataset_info Element (nur bei Automatischem Ablauf benötigt)}
 }
 \description{
 add_data_to_dataset
