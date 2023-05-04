@@ -94,9 +94,16 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
-  if (save_names & !is.null(dataset_info)){
-    dataset_info$original_names <- spalten$Name_Neu
-    lgr$info("add_data_to_dataset: original_names saved")
+  if (!is.null(dataset_info)){
+    if (save_names) {
+      dataset_info$original_names <- spalten$Name_Neu
+      lgr$info("add_data_to_dataset: original_names saved")
+    } else {
+      lgr$info("add_data_to_dataset: original_names not saved")
+    }
     return(dataset_info)
+
+  } else {
+    return(NULL)
   }
 }

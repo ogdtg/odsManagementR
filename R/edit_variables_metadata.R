@@ -123,9 +123,16 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
-  if (save_names & !is.null(dataset_info)){
+  if (!is.null(dataset_info)){
+    if (save_names) {
       dataset_info$original_names <- spalten$Name_Neu
       lgr$info("add_data_to_dataset: original_names saved")
-      return(dataset_info)
+    } else {
+      lgr$info("add_data_to_dataset: original_names not saved")
     }
+    return(dataset_info)
+
+  } else {
+    return(NULL)
+  }
 }
