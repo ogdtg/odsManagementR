@@ -28,11 +28,14 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
   #   variables <- readRDS(change_names)
   # }
   variables <- tryCatch({
-    readRDS(change_names)
+    dataset_info$original_names
   }, error = function(e){
-    lgr$info("edit_variables_metadata: No change_names given or file does not exist.")
+    lgr$info("edit_variables_metadata: No dataset_info given.")
     spalten$Name_Neu
   })
+  if (is.null(variables)){
+    variables <- spalten$Name_Neu
+  }
 
   # variables <- spalten$Name_Neu[spalten$Name_Neu %in% glimpse_res$fields$name]
   # uncommon <- spalten$Name_Neu[!spalten$Name_Neu %in% glimpse_res$fields$name]
