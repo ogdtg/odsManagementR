@@ -9,7 +9,7 @@
 #'
 lookup_dataset_uid <- function(id_or_title) {
 
-  metadatda_catalog <- get_dataset_info()
+  metadatda_catalog <- get_dataset_info(save_local = F)
 
   if (id_or_title %in% metadata_catalog$dataset_uid) {
     dataset_uid <- id_or_title
