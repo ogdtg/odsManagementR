@@ -4,13 +4,13 @@
 #'
 #' @param dataset_uid kann metadta_catalog entnommen werden
 #' @param schema ausgefülltes Schema excel
-#' @param lgr ein lgr Objekt
 #' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)
 #' @param dataset_info dataset_info Element (nur bei Automatischem Ablauf benötigt)
+#' @param lgr_mod boolean ob logger modul vorhanden ist
 #'
 #' @export
 #'
-edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = FALSE, dataset_info = NULL) {
+edit_variables_metadata <- function(dataset_uid,schema,lgr_mod = FALSE, save_names = FALSE, dataset_info = NULL) {
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
   spalten <- spalten[rowSums(is.na(spalten)) != ncol(spalten),]
   #
@@ -30,7 +30,9 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
   variables <- tryCatch({
     dataset_info$original_names
   }, error = function(e){
-    lgr$info("edit_variables_metadata: No dataset_info given.")
+    if (lgr_mod){
+      lgr::lgr$info("edit_variables_metadata: No dataset_info given.")
+    }
     spalten$Name_Neu
   })
   if (is.null(variables)){
@@ -41,7 +43,9 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
   # uncommon <- spalten$Name_Neu[!spalten$Name_Neu %in% glimpse_res$fields$name]
 
   if (length(variables)!=length(spalten$Name_Neu)){
-    lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+    if (lgr_mod) {
+      lgr::lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+    }
     stop()
   }
 
@@ -104,9 +108,10 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
 
     }, error = function(e){
       tryCatch({
-        lgr$error(paste0("edit_variables_metadata: Error for",spalten$Name_Neu[i],": ", e))
+        if (lgr_mod){}
+        lgr::lgr$error(paste0("edit_variables_metadata: Error for",spalten$Name_Neu[i],": ", e))
         res <- restore_change(dataset_uid=dataset_uid,restore_uid = restore_uid)
-        lgr$info(paste0("edit_variables_metadata: Restored Change ",restore_uid," with status code ",res))
+        lgr::lgr$info(paste0("edit_variables_metadata: Restored Change ",restore_uid," with status code ",res))
         stop("process aborted")
       }, error = function(cond){
         warning(paste0("Error for",spalten$Name_Neu[i],": ", e))
@@ -124,11 +129,15 @@ edit_variables_metadata <- function(dataset_uid,schema,lgr = NULL, save_names = 
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
   if (!is.null(dataset_info)){
-    if (save_names) {
+    if (save_names & lgr_mod) {
       dataset_info$original_names <- spalten$Name_Neu
-      lgr$info("add_data_to_dataset: original_names saved")
+      if (lgr_mod){
+        lgr::lgr$info("add_data_to_dataset: original_names saved")
+      }
     } else {
-      lgr$info("add_data_to_dataset: original_names not saved")
+      if (lgr_mod){
+        lgr::lgr$info("add_data_to_dataset: original_names not saved")
+      }
     }
     return(dataset_info)
 

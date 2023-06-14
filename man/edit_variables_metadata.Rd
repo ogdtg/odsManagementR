@@ -7,7 +7,7 @@
 edit_variables_metadata(
   dataset_uid,
   schema,
-  lgr = NULL,
+  lgr_mod = FALSE,
   save_names = FALSE,
   dataset_info = NULL
 )
@@ -17,7 +17,7 @@ edit_variables_metadata(
 
 \item{schema}{ausgefülltes Schema excel}
 
-\item{lgr}{ein lgr Objekt}
+\item{lgr_mod}{boolean ob logger modul vorhanden ist}
 
 \item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)}
 

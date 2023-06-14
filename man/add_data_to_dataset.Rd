@@ -11,7 +11,8 @@ add_data_to_dataset(
   ogd_file,
   resource_title,
   save_names = FALSE,
-  dataset_info = NULL
+  dataset_info = NULL,
+  lgr_mod = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ add_data_to_dataset(
 \item{save_names}{boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)}
 
 \item{dataset_info}{dataset_info Element (nur bei Automatischem Ablauf benötigt)}
+
+\item{lgr_mod}{boolean ob logger modul vorhanden ist}
 }
 \description{
 add_data_to_dataset

@@ -6,13 +6,14 @@
 #' @param ogd_file csv file, welches die Daten enthält
 #' @param resource_title geünschter Titel der Resource auf ODS
 #' @param save_names boolean der angibt ob die Variablennamen aus dem Excel gespeichert werden sollen (nur bei Automatischem Ablauf benötigt)
+#' @param lgr_mod boolean ob logger modul vorhanden ist
 #' @param dataset_info dataset_info Element (nur bei Automatischem Ablauf benötigt)
 #'
 #' @importFrom readxl read_excel
 #'
 #' @export
 #'
-add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save_names =FALSE, dataset_info = NULL){
+add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save_names =FALSE, dataset_info = NULL,lgr_mod = FALSE){
 
 
   spalten <- read_excel(schema,sheet="Spaltenbeschreibungen")
@@ -24,14 +25,19 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save
 
   # check names Path
   variables <- tryCatch({
-    readRDS(original_name_path)
+    dataset_info$original_names
   }, error = function(e){
-    lgr$info("add_data_to_dataset: No change_names given or file does not exist.")
+    if (lgr_mod){
+      lgr::lgr$info("edit_variables_metadata: No dataset_info given.")
+    }
     spalten$Name_Neu
   })
+  if (is.null(variables)){
+    variables <- spalten$Name_Neu
+  }
 
-  if (length(variables)!=length(spalten$Name_Neu)){
-    lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
+  if (length(variables)!=length(spalten$Name_Neu) & lgr_mod){
+    lgr::lgr$error(paste0("edit_variables_metadata: Metadata (",length(spalten$Name_Neu),") and data (",length(variables),") do not contain the same amount of variables"))
     stop()
   }
 
@@ -94,12 +100,12 @@ add_data_to_dataset <- function(dataset_uid,schema,ogd_file,resource_title, save
   text_fields <- spalten$Name_Neu[which(spalten$type=="text")]
   make_fields_sortable(dataset_uid = dataset_uid,fields = text_fields)
 
-  if (!is.null(dataset_info)){
+  if (!is.null(dataset_info)& lgr_mod){
     if (save_names) {
       dataset_info$original_names <- spalten$Name_Neu
-      lgr$info("add_data_to_dataset: original_names saved")
+      lgr::lgr$info("add_data_to_dataset: original_names saved")
     } else {
-      lgr$info("add_data_to_dataset: original_names not saved")
+      lgr::lgr$info("add_data_to_dataset: original_names not saved")
     }
     return(dataset_info)
 
