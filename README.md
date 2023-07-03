@@ -32,7 +32,7 @@ initialize_user(username = "max.mustermann@tg.ch",
                 password = "xxxxxxxxx",
                 domain = "data.tg.ch")
 ```
-Der Key kann sowohl im Frontend unter `https://{domain}/account/api-keys/` als auch über `getKey()` abgerufen werden. Am Besten speichert man den Key als Variable in einem `.Renviron` File, sodass man ihn beim erneuten Nutzen des Packages erneuteinlesen kann. Dann sollte man anstelle der `initialize_user` Funktion die Domain und den Key separat über `setDomain` bzw.`setKey`.
+Der Key kann sowohl im Frontend unter `https://{domain}/account/api-keys/` als auch über `getKey()` abgerufen werden. Am Besten speichert man den Key als Variable in einem `.Renviron` File, sodass man ihn beim erneuten Nutzen des Packages erneut einlesen kann. Dann sollte man anstelle der `initialize_user` Funktion die Domain und den Key separat über `setDomain` bzw.`setKey` setzen.
 
 Die Nutzung des API Keys wird gegenüber der Nutzung von Passwort und Username bevorzugt, da API Keys einfach und schnell wieder gelöscht werden können.
 
@@ -135,7 +135,7 @@ set_metadata(dataset_id = "da-xxxxxx",
 
 ### Wrapper Funktion
 
-Um um CSV Dateien vom loakeln System ins ODS zu laden, den im vorherigen Schrit erstellten Metadatensatz mit der Datenresource zu verbinden und die Spaltenbeschreibungen und Datentypen zu bearbeiten kann die `add_data_to_dataset` Funktion verwendet werden. Als Parameter muss hier die `dataset_uid` anegegeben werden, die `add_metadata_from_scheme` zurück gibt. Ausserdem muss der Pfad zum ausgefüllten Schema sowie zum lokalen CSV File mit den Daten angegeben werden. Schliesslich muss ein Titel für die Resource auf ODS angegeben werden.
+Um CSV Dateien vom lokalen System ins ODS zu laden, den im vorherigen Schritt erstellten Metadatensatz mit der Datenresource zu verbinden und die Spaltenbeschreibungen und Datentypen zu bearbeiten, kann die `add_data_to_dataset` Funktion verwendet werden. Als Parameter muss hier die `dataset_uid` anegegeben werden, die `add_metadata_from_scheme` zurück gibt. Ausserdem muss der Pfad zum ausgefüllten Schema sowie zum lokalen CSV File mit den Daten angegeben werden. Schliesslich muss ein Titel für die Resource auf ODS angegeben werden.
 
 ```r
 add_data_to_dataset(
