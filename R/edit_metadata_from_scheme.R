@@ -61,6 +61,12 @@ edit_metadata_from_scheme <- function(filepath, harvesting = TRUE, zuschreibunge
       meta_value = strsplit(meta_value,",")
       meta_value = meta_value[[1]]
     }
+
+    if (meta_name == "accrualperiodicity") {
+      set_accrualperiodicity(dataset_uid = dataset_uid, value = meta_value)
+      next
+    }
+
     if (meta_name == "theme") {
       #print(meta_value)
       if (is.na(meta_value)){
